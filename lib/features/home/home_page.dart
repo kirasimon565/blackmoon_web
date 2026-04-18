@@ -14,11 +14,11 @@ class HomePage extends StatelessWidget {
     return Column(
       children: const [
         _IntroSection(),
-        SizedBox(height: 48),
+        SizedBox(height: 56),
         _FeaturedProjectSection(),
-        SizedBox(height: 48),
+        SizedBox(height: 56),
         _AboutSection(),
-        SizedBox(height: 48),
+        SizedBox(height: 56),
       ],
     );
   }
@@ -61,9 +61,11 @@ class _IntroSection extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.black.withAlpha(178), // ~0.7 opacity
-                    Colors.black.withAlpha(51),  // ~0.2 opacity
+                    Colors.black.withOpacity(0.75),
+                    Colors.black.withOpacity(0.25),
+                    Colors.black.withOpacity(0.85),
                   ],
+                  stops: [0.0, 0.5, 1.0],
                 ),
               ),
             ),
@@ -82,7 +84,7 @@ class _IntroSection extends StatelessWidget {
                   const SizedBox(height: 12),
                   Text(
                     'Interactive story studio',
-                    style: AppTextStyles.h2.copyWith(color: const Color(0xFF9AA4AF)),
+                    style: AppTextStyles.subtitle,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 24),
@@ -116,13 +118,13 @@ class _FeaturedProjectSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text('DREADMOOR', style: AppTextStyles.h2),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           const Text(
             'A narrative-driven crime experience told through messages.',
             style: AppTextStyles.body,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 28),
           Wrap(
             spacing: 16,
             runSpacing: 16,
