@@ -32,7 +32,7 @@ class AppTheme {
           textStyle: AppTextStyles.bodyMedium,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           elevation: 4, // Enables shadow
-          shadowColor: Colors.black.withOpacity(0.25),
+          shadowColor: Colors.black.withAlpha(64), // 0.25 * 255
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -45,7 +45,7 @@ class AppTheme {
           side: const BorderSide(color: AppColors.accent, width: 2),
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           elevation: 4, // Enables shadow
-          shadowColor: Colors.black.withOpacity(0.25),
+          shadowColor: Colors.black.withAlpha(64), // 0.25 * 255
           backgroundColor: AppColors.background, // Ensure background is solid for shadow to show properly
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
