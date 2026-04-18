@@ -95,7 +95,7 @@ class _Header extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 16),
                   child: ColorFiltered(
                     colorFilter: ColorFilter.mode(
-                      Colors.white.withOpacity(0.9), // 0.9 opacity overlay
+                      Colors.white.withAlpha(230), // 0.9 opacity overlay (0.9 * 255)
                       BlendMode.srcATop,
                     ),
                     child: Image.asset(
@@ -193,7 +193,7 @@ class _MobileOverlayMenu extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 16),
                     child: ColorFiltered(
                       colorFilter: ColorFilter.mode(
-                        Colors.white.withOpacity(0.9),
+                        Colors.white.withAlpha(230), // 0.9 * 255
                         BlendMode.srcATop,
                       ),
                       child: Image.asset(
