@@ -4,16 +4,19 @@ class ConcaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     final path = Path();
-    path.lineTo(0, size.height - 40); // Start higher to make the curve deeper but smooth
 
-    // Create a smooth, more noticeable U-shape (concave) bezier curve to the bottom right
+    path.lineTo(0, size.height - 60);
+
     path.quadraticBezierTo(
-      size.width / 2, size.height + 40, // Control point pushed down further to emphasize the curve
-      size.width, size.height - 40, // End at the same elevated height
+      size.width / 2,
+      size.height + 50,
+      size.width,
+      size.height - 60,
     );
 
     path.lineTo(size.width, 0);
     path.close();
+
     return path;
   }
 
