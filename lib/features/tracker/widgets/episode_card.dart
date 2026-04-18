@@ -30,10 +30,17 @@ class EpisodeCard extends StatelessWidget {
                 episode.title,
                 style: AppTextStyles.h2.copyWith(fontWeight: FontWeight.bold),
               ),
-              Text(
-                episode.status,
-                style: AppTextStyles.bodySecondary.copyWith(
-                  color: episode.status == 'Released' ? Colors.greenAccent : AppColors.textSecondary,
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: AppColors.background,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  '[ ${episode.status} ]',
+                  style: AppTextStyles.bodySecondary.copyWith(
+                    color: episode.status == 'Released' ? AppColors.textPrimary : AppColors.textSecondary,
+                  ),
                 ),
               ),
             ],
@@ -42,13 +49,13 @@ class EpisodeCard extends StatelessWidget {
           const Text('Progress', style: AppTextStyles.bodyMedium),
           const SizedBox(height: 16),
           ProgressBar(label: 'Story', percentage: episode.storyProgress),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           ProgressBar(label: 'Programming', percentage: episode.programmingProgress),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           ProgressBar(label: 'Art & Media', percentage: episode.artProgress),
           const SizedBox(height: 24),
           const Text('Features', style: AppTextStyles.bodyMedium),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           FeatureList(
             completed: episode.completedFeatures,
             inProgress: episode.inProgressFeatures,

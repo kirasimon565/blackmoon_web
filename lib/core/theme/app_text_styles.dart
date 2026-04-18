@@ -14,7 +14,7 @@ class AppTextStyles {
 
   static const TextStyle h2 = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 28,
+    fontSize: 20,
     fontWeight: FontWeight.w600, // SemiBold
     color: AppColors.textPrimary,
     height: 1.5,

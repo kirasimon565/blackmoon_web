@@ -13,23 +13,20 @@ class ProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(label, style: const TextStyle(color: AppColors.textPrimary)),
-            Text('$percentage%', style: const TextStyle(color: AppColors.textSecondary)),
-          ],
+        SizedBox(
+          width: 100,
+          child: Text(label, style: const TextStyle(color: AppColors.textPrimary)),
         ),
-        const SizedBox(height: 8),
-        Container(
-          height: 8,
-          decoration: BoxDecoration(
-            color: const Color(0xFF1A222C),
-            borderRadius: BorderRadius.circular(8),
-          ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Container(
+            height: 8,
+            decoration: BoxDecoration(
+              color: const Color(0xFF1A222C),
+              borderRadius: BorderRadius.circular(8),
+            ),
             child: Row(
               children: [
                 if (percentage > 0)
@@ -49,6 +46,12 @@ class ProgressBar extends StatelessWidget {
                   ),
               ],
             ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        SizedBox(
+          width: 40,
+          child: Text('$percentage%', style: const TextStyle(color: AppColors.textSecondary), textAlign: TextAlign.right),
         ),
       ],
     );

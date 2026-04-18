@@ -30,9 +30,11 @@ class AppTheme {
           backgroundColor: AppColors.accent,
           foregroundColor: AppColors.textPrimary,
           textStyle: AppTextStyles.bodyMedium,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          elevation: 4, // Enables shadow
+          shadowColor: Colors.black.withOpacity(0.25),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(12),
           ),
         ),
       ),
@@ -41,9 +43,12 @@ class AppTheme {
           foregroundColor: AppColors.textPrimary,
           textStyle: AppTextStyles.bodyMedium,
           side: const BorderSide(color: AppColors.accent, width: 2),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          elevation: 4, // Enables shadow
+          shadowColor: Colors.black.withOpacity(0.25),
+          backgroundColor: AppColors.background, // Ensure background is solid for shadow to show properly
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(12),
           ),
         ),
       ),
