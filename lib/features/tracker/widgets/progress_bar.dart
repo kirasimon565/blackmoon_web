@@ -22,11 +22,12 @@ class ProgressBar extends StatelessWidget {
         const SizedBox(width: 16),
         Expanded(
           child: Container(
-            height: 8,
+            height: 10, // Increased height to 10px
             decoration: BoxDecoration(
               color: const Color(0xFF1A222C),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(5), // Subtle rounded corners
             ),
+            clipBehavior: Clip.hardEdge, // Ensure child container honors border radius
             child: Row(
               children: [
                 if (percentage > 0)
@@ -35,7 +36,7 @@ class ProgressBar extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         color: const Color(0xFF3A7CA5),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(5), // Subtle rounded corners
                       ),
                     ),
                   ),

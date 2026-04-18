@@ -37,6 +37,9 @@ class _IntroSection extends StatelessWidget {
       child: Stack(
         children: [
           Positioned.fill(
+            child: Container(color: const Color(0xFF0B0F14)),
+          ),
+          Positioned.fill(
             child: Image.asset(
               'assets/images/backgrounds/fog_main.png',
               fit: BoxFit.cover,
@@ -51,6 +54,20 @@ class _IntroSection extends StatelessWidget {
               ),
             ),
           ),
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withAlpha(178), // ~0.7 opacity
+                    Colors.black.withAlpha(51),  // ~0.2 opacity
+                  ],
+                ),
+              ),
+            ),
+          ),
           // Content
           Center(
             child: ResponsiveContainer(
@@ -62,10 +79,10 @@ class _IntroSection extends StatelessWidget {
                     style: AppTextStyles.h1,
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 16),
-                  const Text(
+                  const SizedBox(height: 12),
+                  Text(
                     'Interactive story studio',
-                    style: AppTextStyles.h2,
+                    style: AppTextStyles.h2.copyWith(color: const Color(0xFF9AA4AF)),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 24),
@@ -73,10 +90,10 @@ class _IntroSection extends StatelessWidget {
                     onPressed: () => context.go(AppRoutes.dreadmoor),
                     child: const Text('View Projects'),
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 24),
                   Text(
                     'Independent studio focused on narrative-driven experiences.',
-                    style: AppTextStyles.body,
+                    style: AppTextStyles.bodySecondary.copyWith(color: const Color(0xFF9AA4AF).withAlpha(178)),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -105,7 +122,7 @@ class _FeaturedProjectSection extends StatelessWidget {
             style: AppTextStyles.body,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
           Wrap(
             spacing: 16,
             runSpacing: 16,
