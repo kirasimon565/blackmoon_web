@@ -6,17 +6,25 @@ class AppTextStyles {
 
   static const TextStyle h1 = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 40,
+    fontSize: 42,
     fontWeight: FontWeight.w700, // Bold
     color: AppColors.textPrimary,
-    height: 1.5,
+    height: 1.3,
   );
 
   static const TextStyle h2 = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: FontWeight.w600, // SemiBold
     color: AppColors.textPrimary,
+    height: 1.4,
+  );
+
+  static const TextStyle subtitle = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+    color: AppColors.textSecondary,
     height: 1.5,
   );
 
