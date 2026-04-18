@@ -30,17 +30,10 @@ class EpisodeCard extends StatelessWidget {
                 episode.title,
                 style: AppTextStyles.h2.copyWith(fontWeight: FontWeight.bold),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: AppColors.background,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Text(
-                  '[ ${episode.status} ]',
-                  style: AppTextStyles.bodySecondary.copyWith(
-                    color: episode.status == 'Released' ? AppColors.textPrimary : AppColors.textSecondary,
-                  ),
+              Text(
+                episode.status,
+                style: AppTextStyles.bodySecondary.copyWith(
+                  color: episode.status == 'Released' ? AppColors.textPrimary : AppColors.textSecondary,
                 ),
               ),
             ],

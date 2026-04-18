@@ -75,11 +75,11 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isDesktop = Responsive.isDesktop(context);
-    final double logoHeight = isDesktop ? 72.0 : 56.0;
+    final double logoHeight = isDesktop ? 80.0 : 64.0;
 
     return Container(
       color: AppColors.background,
-      height: 80, // Using 80 to ensure 64px min, and accommodating 72px logo
+      height: isDesktop ? 100 : 84, // Adjust container height to vertically center logo with less empty space
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: ResponsiveContainer(
         child: Row(
@@ -92,7 +92,7 @@ class _Header extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => context.go(AppRoutes.home),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 16),
+                  padding: const EdgeInsets.only(left: 20),
                   child: ColorFiltered(
                     colorFilter: ColorFilter.mode(
                       Colors.white.withAlpha(230), // 0.9 opacity overlay (0.9 * 255)
@@ -183,14 +183,14 @@ class _MobileOverlayMenu extends StatelessWidget {
           children: [
             // Header area mirroring the main header
             Container(
-              height: 80,
+              height: 84,
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 16),
+                    padding: const EdgeInsets.only(left: 20),
                     child: ColorFiltered(
                       colorFilter: ColorFilter.mode(
                         Colors.white.withAlpha(230), // 0.9 * 255
@@ -198,7 +198,7 @@ class _MobileOverlayMenu extends StatelessWidget {
                       ),
                       child: Image.asset(
                         'assets/images/studio/blackmoon_logo.png',
-                        height: 56, // mobile size
+                        height: 64, // mobile size
                       ),
                     ),
                   ),

@@ -26,29 +26,44 @@ class AppTheme {
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.accent,
-          foregroundColor: AppColors.textPrimary,
-          textStyle: AppTextStyles.bodyMedium,
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-          elevation: 4, // Enables shadow
-          shadowColor: Colors.black.withAlpha(64), // 0.25 * 255
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+            if (states.contains(WidgetState.hovered)) {
+              // Slightly darker accent color for hover state
+              return const Color(0xFF2A6082); // Darkened from AppColors.accent (0xFF3A7CA5)
+            }
+            return AppColors.accent;
+          }),
+          foregroundColor: WidgetStateProperty.all(AppColors.textPrimary),
+          textStyle: WidgetStateProperty.all(AppTextStyles.bodyMedium),
+          padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 36, vertical: 18)),
+          elevation: WidgetStateProperty.all(6), // Slightly softer shadow by increasing elevation
+          shadowColor: WidgetStateProperty.all(Colors.black.withAlpha(100)), // Stronger soft shadow
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.textPrimary,
-          textStyle: AppTextStyles.bodyMedium,
-          side: const BorderSide(color: AppColors.accent, width: 2),
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-          elevation: 4, // Enables shadow
-          shadowColor: Colors.black.withAlpha(64), // 0.25 * 255
-          backgroundColor: AppColors.background, // Ensure background is solid for shadow to show properly
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+            if (states.contains(WidgetState.hovered)) {
+              return AppColors.backgroundSecondary; // Slightly lighter than background for hover
+            }
+            return AppColors.background;
+          }),
+          foregroundColor: WidgetStateProperty.all(AppColors.textPrimary),
+          textStyle: WidgetStateProperty.all(AppTextStyles.bodyMedium),
+          side: WidgetStateProperty.all(const BorderSide(color: AppColors.accent, width: 2)),
+          padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 36, vertical: 18)),
+          elevation: WidgetStateProperty.all(6),
+          shadowColor: WidgetStateProperty.all(Colors.black.withAlpha(100)),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
         ),
       ),
