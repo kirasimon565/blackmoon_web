@@ -29,6 +29,16 @@ jobs:
       - name: Install Wrangler
         run: npm install -g wrangler
 
+      # ✅ NEW: create Pages project if it doesn't exist
+      - name: Create Pages Project (if not exists)
+        run: |
+          wrangler pages project create $CLOUDFLARE_PROJECT_NAME --production-branch=production || echo "Project may already exist"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_PROJECT_NAME: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
+
+      # ✅ Deploy
       - name: Deploy to Cloudflare Pages
         run: |
           wrangler pages deploy build/web \
