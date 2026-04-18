@@ -1,0 +1,42 @@
+{
+  "episodes": [
+    {
+      "title": "Episode 1",
+      "status": "Released",
+      "progress": {
+        "story": 100,
+        "programming": 100,
+        "art": 100
+      },
+      "features": {
+        "completed": [
+          "Core story written",
+          "Dialogue system",
+          "Character art"
+        ],
+        "in_progress": [],
+        "planned": []
+      }
+    },
+    {
+      "title": "Episode 2",
+      "status": "In Development",
+      "progress": {
+        "story": 80,
+        "programming": 70,
+        "art": 90
+      },
+      "features": {
+        "completed": [
+          "Core story written"
+        ],
+        "in_progress": [
+          "Dialogue system"
+        ],
+        "planned": [
+          "Multiple endings"
+        ]
+      }
+    }
+  ]
+}
