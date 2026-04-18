@@ -19,6 +19,13 @@ class EpisodeCard extends StatelessWidget {
         color: const Color(0xFF11161D),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.trackerBackground, width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
