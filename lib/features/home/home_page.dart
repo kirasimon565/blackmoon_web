@@ -36,22 +36,19 @@ class _IntroSection extends StatelessWidget {
       height: headerHeight,
       child: Stack(
         children: [
-          // Background Layer 1: fog
           Positioned.fill(
             child: Image.asset(
               'assets/images/backgrounds/fog_main.png',
               fit: BoxFit.cover,
-              color: Colors.white.withAlpha(76), // 0.3 opacity
-              colorBlendMode: BlendMode.modulate,
             ),
           ),
-          // Background Layer 2: noise texture
           Positioned.fill(
-            child: Image.asset(
-              'assets/images/backgrounds/noise_texture.png',
-              fit: BoxFit.cover,
-              color: Colors.white.withAlpha(38), // ~0.15 opacity
-              colorBlendMode: BlendMode.modulate,
+            child: Opacity(
+              opacity: 0.12,
+              child: Image.asset(
+                'assets/images/backgrounds/noise_texture.png',
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           // Content
@@ -65,38 +62,21 @@ class _IntroSection extends StatelessWidget {
                     style: AppTextStyles.h1,
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 16),
                   const Text(
                     'Interactive story studio',
                     style: AppTextStyles.h2,
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 32),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withAlpha(76), // 0.3 opacity
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      onPressed: () => context.go(AppRoutes.dreadmoor),
-                      child: const Text('View Projects'),
-                    ),
+                  const SizedBox(height: 24),
+                  ElevatedButton(
+                    onPressed: () => context.go(AppRoutes.dreadmoor),
+                    child: const Text('View Projects'),
                   ),
                   const SizedBox(height: 48),
                   Text(
                     'Independent studio focused on narrative-driven experiences.',
-                    style: AppTextStyles.bodySecondary,
+                    style: AppTextStyles.body,
                     textAlign: TextAlign.center,
                   ),
                 ],

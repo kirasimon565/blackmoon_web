@@ -75,27 +75,33 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isDesktop = Responsive.isDesktop(context);
+    final double logoHeight = isDesktop ? 72.0 : 56.0;
 
     return Container(
       color: AppColors.background,
-      height: 80,
+      height: 80, // Using 80 to ensure 64px min, and accommodating 72px logo
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: ResponsiveContainer(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Logo
             MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
                 onTap: () => context.go(AppRoutes.home),
-                child: ColorFiltered(
-                  colorFilter: ColorFilter.mode(
-                    Colors.white.withAlpha(230), // 0.9 * 255 ≈ 230
-                    BlendMode.srcATop,
-                  ),
-                  child: Image.asset(
-                    'assets/images/studio/blackmoon_logo.png',
-                    height: 40,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                      Colors.white.withOpacity(0.9), // 0.9 opacity overlay
+                      BlendMode.srcATop,
+                    ),
+                    child: Image.asset(
+                      'assets/images/studio/blackmoon_logo.png',
+                      height: logoHeight,
+                    ),
                   ),
                 ),
               ),
@@ -181,15 +187,19 @@ class _MobileOverlayMenu extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ColorFiltered(
-                    colorFilter: ColorFilter.mode(
-                      Colors.white.withAlpha(230),
-                      BlendMode.srcATop,
-                    ),
-                    child: Image.asset(
-                      'assets/images/studio/blackmoon_logo.png',
-                      height: 40,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                        Colors.white.withOpacity(0.9),
+                        BlendMode.srcATop,
+                      ),
+                      child: Image.asset(
+                        'assets/images/studio/blackmoon_logo.png',
+                        height: 56, // mobile size
+                      ),
                     ),
                   ),
                   IconButton(
