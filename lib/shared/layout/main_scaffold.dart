@@ -88,9 +88,15 @@ class _Header extends StatelessWidget {
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
                 onTap: () => context.go(AppRoutes.home),
-                child: Text(
-                  'BLACKMOON',
-                  style: AppTextStyles.h2.copyWith(fontSize: 24),
+                child: ColorFiltered(
+                  colorFilter: ColorFilter.mode(
+                    Colors.white.withAlpha(230), // 0.9 * 255 ≈ 230
+                    BlendMode.srcATop,
+                  ),
+                  child: Image.asset(
+                    'assets/images/studio/blackmoon_logo.png',
+                    height: 40,
+                  ),
                 ),
               ),
             ),
@@ -176,9 +182,15 @@ class _MobileOverlayMenu extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'BLACKMOON',
-                    style: AppTextStyles.h2.copyWith(fontSize: 24),
+                  ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                      Colors.white.withAlpha(230),
+                      BlendMode.srcATop,
+                    ),
+                    child: Image.asset(
+                      'assets/images/studio/blackmoon_logo.png',
+                      height: 40,
+                    ),
                   ),
                   IconButton(
                     icon: const Icon(

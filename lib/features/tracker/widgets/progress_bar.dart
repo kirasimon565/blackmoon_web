@@ -13,25 +13,23 @@ class ProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(label, style: const TextStyle(color: AppColors.textPrimary)),
-              Text('$percentage%', style: const TextStyle(color: AppColors.textPrimary)),
-            ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(label, style: const TextStyle(color: AppColors.textPrimary)),
+            Text('$percentage%', style: const TextStyle(color: AppColors.textSecondary)),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Container(
+          height: 8,
+          decoration: BoxDecoration(
+            color: const Color(0xFF1A222C),
+            borderRadius: BorderRadius.circular(8),
           ),
-          const SizedBox(height: 8),
-          Container(
-            height: 8,
-            decoration: BoxDecoration(
-              color: AppColors.trackerBackground,
-              borderRadius: BorderRadius.circular(8),
-            ),
             child: Row(
               children: [
                 if (percentage > 0)
@@ -39,7 +37,7 @@ class ProgressBar extends StatelessWidget {
                     flex: percentage,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: AppColors.accent,
+                        color: const Color(0xFF3A7CA5),
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
@@ -51,9 +49,8 @@ class ProgressBar extends StatelessWidget {
                   ),
               ],
             ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

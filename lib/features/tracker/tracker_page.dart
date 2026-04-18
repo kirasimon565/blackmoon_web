@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/layout/responsive_container.dart';
 import 'models/episode_model.dart';
@@ -14,30 +14,23 @@ class TrackerPage extends StatefulWidget {
 }
 
 class _TrackerPageState extends State<TrackerPage> {
-  List<EpisodeModel> _episodes = [];
-  bool _isLoading = true;
+  late Future<List<EpisodeModel>> _episodesFuture;
 
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _episodesFuture = fetchTracker();
   }
 
-  Future<void> _loadData() async {
-    try {
-      final jsonString = await rootBundle.loadString('assets/data/tracker_data.json');
-      final Map<String, dynamic> data = json.decode(jsonString);
-      final List<dynamic> episodesJson = data['episodes'] ?? [];
+  Future<List<EpisodeModel>> fetchTracker() async {
+    final response = await http.get(Uri.parse('https://solitary-glitter-c0f6.natalieparker1444.workers.dev/tracker'));
 
-      setState(() {
-        _episodes = episodesJson.map((e) => EpisodeModel.fromJson(e)).toList();
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
-      // Handle error visually if needed
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      final List<dynamic> episodesJson = data['episodes'] ?? [];
+      return episodesJson.map((e) => EpisodeModel.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load tracker data');
     }
   }
 
@@ -56,12 +49,33 @@ class _TrackerPageState extends State<TrackerPage> {
               style: AppTextStyles.body,
             ),
             const SizedBox(height: 48),
-            if (_isLoading)
-              const Center(child: CircularProgressIndicator())
-            else if (_episodes.isEmpty)
-              const Center(child: Text('No data available.'))
-            else
-              ..._episodes.map((episode) => EpisodeCard(episode: episode)),
+            FutureBuilder<List<EpisodeModel>>(
+              future: _episodesFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      'Failed to load data. Please try again later.',
+                      style: AppTextStyles.body,
+                    ),
+                  );
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      'No data available.',
+                      style: AppTextStyles.body,
+                    ),
+                  );
+                }
+
+                final episodes = snapshot.data!;
+                return Column(
+                  children: episodes.map((episode) => EpisodeCard(episode: episode)).toList(),
+                );
+              },
+            ),
           ],
         ),
       ),

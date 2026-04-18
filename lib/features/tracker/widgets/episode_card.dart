@@ -13,11 +13,11 @@ class EpisodeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 32),
-      padding: const EdgeInsets.all(24),
+      margin: const EdgeInsets.only(bottom: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       decoration: BoxDecoration(
-        color: AppColors.backgroundSecondary,
-        borderRadius: BorderRadius.circular(12),
+        color: const Color(0xFF11161D),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.trackerBackground, width: 1),
       ),
       child: Column(
@@ -26,11 +26,14 @@ class EpisodeCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(episode.title, style: AppTextStyles.h2),
               Text(
-                'Status: ${episode.status}',
+                episode.title,
+                style: AppTextStyles.h2.copyWith(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                episode.status,
                 style: AppTextStyles.bodySecondary.copyWith(
-                  color: episode.status == 'Released' ? Colors.greenAccent : AppColors.accent,
+                  color: episode.status == 'Released' ? Colors.greenAccent : AppColors.textSecondary,
                 ),
               ),
             ],
@@ -39,9 +42,11 @@ class EpisodeCard extends StatelessWidget {
           const Text('Progress', style: AppTextStyles.bodyMedium),
           const SizedBox(height: 16),
           ProgressBar(label: 'Story', percentage: episode.storyProgress),
+          const SizedBox(height: 16),
           ProgressBar(label: 'Programming', percentage: episode.programmingProgress),
+          const SizedBox(height: 16),
           ProgressBar(label: 'Art & Media', percentage: episode.artProgress),
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
           const Text('Features', style: AppTextStyles.bodyMedium),
           const SizedBox(height: 16),
           FeatureList(
