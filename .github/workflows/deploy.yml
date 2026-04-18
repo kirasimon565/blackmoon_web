@@ -1,0 +1,50 @@
+name: Build and Deploy Flutter Web to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - feature/blackmoon-web-scaffold-17299529217158654530
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build Flutter Web
+        run: |
+          flutter build web --release
+          echo "/*    /index.html   200" > build/web/_redirects
+
+      - name: Install Wrangler
+        run: npm install -g wrangler
+
+      # ✅ NEW: create Pages project if it doesn't exist
+      - name: Create Pages Project (if not exists)
+        run: |
+          wrangler pages project create $CLOUDFLARE_PROJECT_NAME --production-branch=production || echo "Project may already exist"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_PROJECT_NAME: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
+
+      # ✅ Deploy
+      - name: Deploy to Cloudflare Pages
+        run: |
+          wrangler pages deploy build/web \
+            --project-name=$CLOUDFLARE_PROJECT_NAME \
+            --branch=production
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_PROJECT_NAME: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
