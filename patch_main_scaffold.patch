@@ -1,0 +1,75 @@
+--- lib/shared/layout/main_scaffold.dart
++++ lib/shared/layout/main_scaffold.dart
+@@ -102,15 +102,15 @@
+             Expanded(
+-              child: Center(
+-                child: Column(
+-                  mainAxisSize: MainAxisSize.min,
+-                  children: [
+-                    _MenuNavItem(title: 'Home', route: AppRoutes.home, onClose: onClose),
+-                    const SizedBox(height: 32),
+-                    _MenuNavItem(title: 'Dreadmoor', route: AppRoutes.dreadmoor, onClose: onClose),
+-                    const SizedBox(height: 32),
+-                    _MenuNavItem(title: 'Episode Tracker', route: AppRoutes.tracker, onClose: onClose),
+-                    const SizedBox(height: 32),
+-                    _MenuNavItem(title: 'Contact', route: AppRoutes.contact, onClose: onClose),
+-                  ],
+-                ),
++              child: Padding(
++                padding: const EdgeInsets.symmetric(horizontal: 24),
++                child: Column(
++                  crossAxisAlignment: CrossAxisAlignment.start,
++                  mainAxisAlignment: MainAxisAlignment.center,
++                  children: [
++                    _menuItem(context, "Home", "/"),
++                    const SizedBox(height: 24),
++                    _menuItem(context, "Dreadmoor", "/dreadmoor"),
++                    const SizedBox(height: 24),
++                    _menuItem(context, "Episode Tracker", "/tracker"),
++                    const SizedBox(height: 24),
++                    _menuItem(context, "Contact", "/contact"),
++                  ],
++                ),
+               ),
+@@ -124,20 +124,14 @@
+
+-class _MenuNavItem extends StatelessWidget {
+-  final String title;
+-  final String route;
+-  final VoidCallback onClose;
+-
+-  const _MenuNavItem({
+-    required this.title,
+-    required this.route,
+-    required this.onClose,
+-  });
+-
+-  @override
+-  Widget build(BuildContext context) {
+-    return GestureDetector(
+-      onTap: () {
+-        onClose();
+-        context.go(route);
+-      },
+-      child: Text(
+-        title,
+-        style: AppTextStyles.h2,
+-      ),
+-    );
+-  }
++  Widget _menuItem(BuildContext context, String title, String route) {
++    return GestureDetector(
++      onTap: () {
++        onClose();
++        context.go(route);
++      },
++      child: Text(
++        title,
++        style: const TextStyle(
++          fontSize: 28,
++          fontWeight: FontWeight.w600,
++          color: Color(0xFFE6EAF0),
++        ),
++      ),
++    );
++  }
