@@ -30,15 +30,19 @@ class AppTheme {
           backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
             if (states.contains(WidgetState.hovered)) {
               // Slightly darker accent color for hover state
-              return const Color(0xFF2A6082); // Darkened from AppColors.accent (0xFF3A7CA5)
+              return const Color(
+                  0xFF2A6082); // Darkened from AppColors.accent (0xFF3A7CA5)
             }
             return AppColors.accent;
           }),
           foregroundColor: WidgetStateProperty.all(AppColors.textPrimary),
           textStyle: WidgetStateProperty.all(AppTextStyles.bodyMedium),
-          padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 36, vertical: 18)),
-          elevation: WidgetStateProperty.all(6), // Slightly softer shadow by increasing elevation
-          shadowColor: WidgetStateProperty.all(Colors.black.withAlpha(100)), // Stronger soft shadow
+          padding: WidgetStateProperty.all(
+              const EdgeInsets.symmetric(horizontal: 36, vertical: 18)),
+          elevation: WidgetStateProperty.all(
+              6), // Slightly softer shadow by increasing elevation
+          shadowColor: WidgetStateProperty.all(
+              Colors.black.withAlpha(100)), // Stronger soft shadow
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -50,14 +54,17 @@ class AppTheme {
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
             if (states.contains(WidgetState.hovered)) {
-              return AppColors.backgroundSecondary; // Slightly lighter than background for hover
+              return AppColors
+                  .backgroundSecondary; // Slightly lighter than background for hover
             }
             return AppColors.background;
           }),
           foregroundColor: WidgetStateProperty.all(AppColors.textPrimary),
           textStyle: WidgetStateProperty.all(AppTextStyles.bodyMedium),
-          side: WidgetStateProperty.all(const BorderSide(color: AppColors.accent, width: 2)),
-          padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 36, vertical: 18)),
+          side: WidgetStateProperty.all(
+              const BorderSide(color: AppColors.accent, width: 2)),
+          padding: WidgetStateProperty.all(
+              const EdgeInsets.symmetric(horizontal: 36, vertical: 18)),
           elevation: WidgetStateProperty.all(6),
           shadowColor: WidgetStateProperty.all(Colors.black.withAlpha(100)),
           shape: WidgetStateProperty.all(

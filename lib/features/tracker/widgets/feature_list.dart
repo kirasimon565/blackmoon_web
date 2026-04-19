@@ -41,15 +41,16 @@ class FeatureList extends StatelessWidget {
         Text(title, style: AppTextStyles.bodyMedium),
         const SizedBox(height: 8),
         ...items.map((item) => Padding(
-          padding: const EdgeInsets.only(bottom: 4.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('• ', style: TextStyle(color: AppColors.textSecondary)),
-              Expanded(child: Text(item, style: AppTextStyles.body)),
-            ],
-          ),
-        )),
+              padding: const EdgeInsets.only(bottom: 4.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('• ',
+                      style: TextStyle(color: AppColors.textSecondary)),
+                  Expanded(child: Text(item, style: AppTextStyles.body)),
+                ],
+              ),
+            )),
       ],
     );
   }

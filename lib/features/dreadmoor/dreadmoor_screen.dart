@@ -110,7 +110,8 @@ class DreadmoorScreen extends StatelessWidget {
                       const SizedBox(height: 16),
                       Text(
                         'Uncover the secrets of the dark forest in this interactive narrative.',
-                        style: AppTextStyles.bodySecondary.copyWith(fontSize: 16),
+                        style:
+                            AppTextStyles.bodySecondary.copyWith(fontSize: 16),
                       ),
                     ],
                   ),
