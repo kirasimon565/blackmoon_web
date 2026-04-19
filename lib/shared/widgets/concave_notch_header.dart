@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/responsive.dart';
+import '../../routing/routes.dart';
 
 class ConcaveNotchHeader extends StatelessWidget {
   final VoidCallback onMenuToggle;
@@ -28,17 +30,23 @@ class ConcaveNotchHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Left: BLACKMOON (text logo or image logo based on previous code)
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                  Colors.white.withAlpha(230),
-                  BlendMode.srcATop,
-                ),
-                child: Image.asset(
-                  'assets/images/studio/blackmoon_logo.png',
-                  height: logoHeight,
+            // Left: BLACKMOON (clickable text logo)
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => context.go(AppRoutes.home),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                      Colors.white.withAlpha(230),
+                      BlendMode.srcATop,
+                    ),
+                    child: Image.asset(
+                      'assets/images/studio/blackmoon_logo.png',
+                      height: logoHeight,
+                    ),
+                  ),
                 ),
               ),
             ),

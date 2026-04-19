@@ -88,11 +88,9 @@ class DreadmoorScreen extends StatelessWidget {
                           const SizedBox(height: 48),
                           Row(
                             children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  // Play action
-                                },
-                                child: const Text('Play'),
+                              const ElevatedButton(
+                                onPressed: null, // Do nothing for now
+                                child: Text('Play'),
                               ),
                               const SizedBox(width: 16),
                               OutlinedButton(

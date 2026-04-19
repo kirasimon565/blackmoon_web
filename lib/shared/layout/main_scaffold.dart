@@ -60,9 +60,9 @@ class _MainScaffoldState extends State<MainScaffold> {
           ),
 
           // Full Screen Overlay Menu
-          if (_isMenuOpen && Responsive.isMobile(context))
+          if (_isMenuOpen)
             Positioned.fill(
-              child: _MobileOverlayMenu(onClose: _closeMenu),
+              child: _OverlayMenu(onClose: _closeMenu),
             ),
         ],
       ),
@@ -70,43 +70,10 @@ class _MainScaffoldState extends State<MainScaffold> {
   }
 }
 
-class _NavItem extends StatefulWidget {
-  final String title;
-  final String route;
-
-  const _NavItem({required this.title, required this.route});
-
-  @override
-  State<_NavItem> createState() => _NavItemState();
-}
-
-class _NavItemState extends State<_NavItem> {
-  bool _isHovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () => context.go(widget.route),
-        child: Text(
-          widget.title,
-          style: AppTextStyles.bodyMedium.copyWith(
-            color: _isHovered ? AppColors.accent : AppColors.textPrimary,
-            decoration: _isHovered ? TextDecoration.underline : null,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _MobileOverlayMenu extends StatelessWidget {
+class _OverlayMenu extends StatelessWidget {
   final VoidCallback onClose;
 
-  const _MobileOverlayMenu({required this.onClose});
+  const _OverlayMenu({required this.onClose});
 
   @override
   Widget build(BuildContext context) {
@@ -117,22 +84,31 @@ class _MobileOverlayMenu extends StatelessWidget {
           children: [
             // Header area mirroring the main header
             Container(
-              height: 84,
+              height: Responsive.isDesktop(context) ? 100 : 84,
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                        Colors.white.withAlpha(230), // 0.9 * 255
-                        BlendMode.srcATop,
-                      ),
-                      child: Image.asset(
-                        'assets/images/studio/blackmoon_logo.png',
-                        height: 64, // mobile size
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () {
+                        onClose();
+                        context.go(AppRoutes.home);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.white.withAlpha(230), // 0.9 * 255
+                            BlendMode.srcATop,
+                          ),
+                          child: Image.asset(
+                            'assets/images/studio/blackmoon_logo.png',
+                            height: Responsive.isDesktop(context) ? 80 : 64,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -152,13 +128,13 @@ class _MobileOverlayMenu extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    _MobileNavItem(title: 'Home', route: AppRoutes.home, onClose: onClose),
+                    _MenuNavItem(title: 'Home', route: AppRoutes.home, onClose: onClose),
                     const SizedBox(height: 32),
-                    _MobileNavItem(title: 'Dreadmoor', route: AppRoutes.dreadmoor, onClose: onClose),
+                    _MenuNavItem(title: 'Dreadmoor', route: AppRoutes.dreadmoor, onClose: onClose),
                     const SizedBox(height: 32),
-                    _MobileNavItem(title: 'Episode Tracker', route: AppRoutes.tracker, onClose: onClose),
+                    _MenuNavItem(title: 'Episode Tracker', route: AppRoutes.tracker, onClose: onClose),
                     const SizedBox(height: 32),
-                    _MobileNavItem(title: 'Contact', route: AppRoutes.contact, onClose: onClose),
+                    _MenuNavItem(title: 'Contact', route: AppRoutes.contact, onClose: onClose),
                   ],
                 ),
               ),
@@ -170,12 +146,12 @@ class _MobileOverlayMenu extends StatelessWidget {
   }
 }
 
-class _MobileNavItem extends StatelessWidget {
+class _MenuNavItem extends StatelessWidget {
   final String title;
   final String route;
   final VoidCallback onClose;
 
-  const _MobileNavItem({
+  const _MenuNavItem({
     required this.title,
     required this.route,
     required this.onClose,
