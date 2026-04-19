@@ -39,7 +39,7 @@ class DreadmoorScreen extends StatelessWidget {
               // Hero Section
               SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 450,
+                  height: 600,
                   width: double.infinity,
                   child: Stack(
                     children: [
@@ -55,38 +55,40 @@ class DreadmoorScreen extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topRight,
                               colors: [
-                                Colors.black.withAlpha(200),
+                                Colors.black.withAlpha(220),
                                 Colors.transparent,
                               ],
                             ),
                           ),
                         ),
                       ),
-                      // L2: Content
-                      Center(
+                      // L2: Content (Off-center, bottom-left aligned)
+                      Positioned(
+                        bottom: 64,
+                        left: 24,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "CURRENT PROJECT",
                               style: AppTextStyles.bodySecondary.copyWith(
-                                fontSize: 12,
-                                letterSpacing: 2,
+                                fontSize: 14,
+                                letterSpacing: 4,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.accent,
                               ),
                             ),
                             const SizedBox(height: 8),
-                            const Text(
+                            Text(
                               'DREADMOOR',
-                              style: AppTextStyles.h1,
-                            ),
-                            const SizedBox(height: 16),
-                            Container(
-                              width: 40,
-                              height: 2,
-                              color: AppColors.accent,
+                              style: AppTextStyles.h1.copyWith(
+                                fontSize: 64,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: -2,
+                              ),
                             ),
                           ],
                         ),
@@ -96,42 +98,54 @@ class DreadmoorScreen extends StatelessWidget {
                 ),
               ),
 
-              // Content Section (Left aligned)
-              SliverPadding(
-                padding: const EdgeInsets.all(20),
-                sliver: SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'A story told through conversations',
-                        style: AppTextStyles.h2,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'Uncover the secrets of the dark forest in this interactive narrative.',
-                        style:
-                            AppTextStyles.bodySecondary.copyWith(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 48)),
 
-              // Items Section (Buttons/Actions)
+              // Items Section (Buttons/Actions) - Keeping it raw and minimal
               SliverPadding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 sliver: SliverToBoxAdapter(
                   child: Row(
                     children: [
-                      const ElevatedButton(
-                        onPressed: null, // Placeholder for "Play"
-                        child: Text('Play Now'),
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 48, vertical: 20),
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(4), // Sharp, less UI-like
+                          ),
+                        ),
+                        child: const Text(
+                          'PLAY NOW',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 1.5,
+                          ),
+                        ),
                       ),
-                      const SizedBox(width: 16),
+                      const SizedBox(width: 24),
                       OutlinedButton(
                         onPressed: () => context.go('/tracker'),
-                        child: const Text('Episode Tracker'),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 20),
+                          foregroundColor: Colors.white,
+                          side:
+                              const BorderSide(color: Colors.white24, width: 2),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        child: const Text(
+                          'TRACKER',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 1.5,
+                          ),
+                        ),
                       ),
                     ],
                   ),

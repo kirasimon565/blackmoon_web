@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
 
 class ProgressBar extends StatelessWidget {
   final String label;
@@ -18,41 +17,30 @@ class ProgressBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          label,
-          style: AppTextStyles.bodySecondary.copyWith(
+          label.toUpperCase(),
+          style: const TextStyle(
             color: AppColors.textPrimary,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w800,
+            fontSize: 14,
+            letterSpacing: 1.5,
+            fontFamily: 'Inter',
           ),
         ),
         const SizedBox(height: 8),
         SizedBox(
-          height: 32,
+          height: 4, // Extremely thin bar
           child: Stack(
             children: [
               // Background bar
               Container(
                 width: double.infinity,
-                color: AppColors.backgroundSecondary,
+                color: Colors.white.withAlpha(20),
               ),
               // Progress fill
               FractionallySizedBox(
                 widthFactor: percentage / 100.0,
                 child: Container(
-                  color: AppColors.accent,
-                ),
-              ),
-              // Percentage text inside bar
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Text(
-                    '$percentage%',
-                    style: AppTextStyles.bodySecondary.copyWith(
-                      color: AppColors.textPrimary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  color: Colors.white,
                 ),
               ),
             ],

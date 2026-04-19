@@ -35,28 +35,28 @@ class ContactPage extends StatelessWidget {
               // SliverAppBar
               const SharedSliverAppBar(),
 
-              // Hero Section (Minimal for contact)
+              // Hero Section (Minimal but strong)
               SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 400,
+                  height: 500,
                   width: double.infinity,
                   child: Stack(
                     children: [
-                      // L0: Hero Background Image (using solid dark background here to fit "minimal")
+                      // L0: Minimal dark background
                       Positioned.fill(
                         child: Container(
                           color: AppColors.backgroundSecondary,
                         ),
                       ),
-                      // L1: Dark Overlay Gradient
+                      // L1: Overlay Gradient
                       Positioned.fill(
                         child: Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topRight,
                               colors: [
-                                Colors.black.withAlpha(200),
+                                Colors.black.withAlpha(255),
                                 Colors.transparent,
                               ],
                             ),
@@ -64,27 +64,19 @@ class ContactPage extends StatelessWidget {
                         ),
                       ),
                       // L2: Content
-                      Center(
+                      Positioned(
+                        bottom: 64,
+                        left: 24,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "GET IN TOUCH",
-                              style: AppTextStyles.bodySecondary.copyWith(
-                                fontSize: 12,
-                                letterSpacing: 2,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            const Text(
                               'CONTACT',
-                              style: AppTextStyles.h1,
-                            ),
-                            const SizedBox(height: 16),
-                            Container(
-                              width: 40,
-                              height: 2,
-                              color: AppColors.accent,
+                              style: AppTextStyles.h1.copyWith(
+                                fontSize: 64,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: -2,
+                              ),
                             ),
                           ],
                         ),
@@ -94,41 +86,25 @@ class ContactPage extends StatelessWidget {
                 ),
               ),
 
-              // Content Section
+              const SliverToBoxAdapter(child: SizedBox(height: 100)),
+
+              // Content Section (Raw, large email)
               SliverPadding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 sliver: SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Reach Out',
-                        style: AppTextStyles.h2,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'For inquiries, reach out via email.',
-                        style:
-                            AppTextStyles.bodySecondary.copyWith(fontSize: 16),
-                      ),
-                      const SizedBox(height: 24),
-                      Container(
-                        width: double.infinity,
-                        height: 2,
-                        color: AppColors.backgroundSecondary,
-                      ),
-                      const SizedBox(height: 24),
-                      Text(
-                        'contact@blackmoonstudio.com',
-                        style: AppTextStyles.body.copyWith(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
+                  child: Text(
+                    'contact@blackmoonstudio.com',
+                    style: AppTextStyles.body.copyWith(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
+
+              const SliverToBoxAdapter(child: SizedBox(height: 100)),
 
               // Footer
               const SharedFooter(),

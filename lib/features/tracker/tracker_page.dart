@@ -65,14 +65,14 @@ class _TrackerPageState extends State<TrackerPage> {
               // SliverAppBar
               const SharedSliverAppBar(),
 
-              // Hero Section
+              // Hero Section - Asymmetrical, Text offset
               SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 450,
+                  height: 500,
                   width: double.infinity,
                   child: Stack(
                     children: [
-                      // L0: Hero Background Image (Using fog for tracker)
+                      // L0: Hero Background Image
                       Positioned.fill(
                         child: Image.asset(
                           'assets/images/backgrounds/fog_main.png',
@@ -84,38 +84,41 @@ class _TrackerPageState extends State<TrackerPage> {
                         child: Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
                               colors: [
-                                Colors.black.withAlpha(200),
+                                AppColors.background.withAlpha(255),
+                                AppColors.background.withAlpha(150),
                                 Colors.transparent,
                               ],
                             ),
                           ),
                         ),
                       ),
-                      // L2: Content
-                      Center(
+                      // L2: Content (Off-center, bottom-left aligned)
+                      Positioned(
+                        bottom: 48,
+                        left: 24,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "DEVELOPMENT",
+                              "SYSTEM STATUS",
                               style: AppTextStyles.bodySecondary.copyWith(
-                                fontSize: 12,
-                                letterSpacing: 2,
+                                fontSize: 14,
+                                letterSpacing: 4,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.accent,
                               ),
                             ),
                             const SizedBox(height: 8),
-                            const Text(
+                            Text(
                               'TRACKER',
-                              style: AppTextStyles.h1,
-                            ),
-                            const SizedBox(height: 16),
-                            Container(
-                              width: 40,
-                              height: 2,
-                              color: AppColors.accent,
+                              style: AppTextStyles.h1.copyWith(
+                                fontSize: 64,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: -2,
+                              ),
                             ),
                           ],
                         ),
@@ -125,37 +128,12 @@ class _TrackerPageState extends State<TrackerPage> {
                 ),
               ),
 
-              // Content Section
-              SliverPadding(
-                padding: const EdgeInsets.all(20),
-                sliver: SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Episode Status',
-                        style: AppTextStyles.h2,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Track development progress across all current projects.',
-                        style:
-                            AppTextStyles.bodySecondary.copyWith(fontSize: 16),
-                      ),
-                      const SizedBox(height: 24),
-                      Container(
-                        width: double.infinity,
-                        height: 2,
-                        color: AppColors.backgroundSecondary,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Spacer instead of explanation text
+              const SliverToBoxAdapter(child: SizedBox(height: 48)),
 
               // Items Section (Episode List)
               SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 sliver: FutureBuilder<List<EpisodeModel>>(
                   future: _episodesFuture,
                   builder: (context, snapshot) {
@@ -165,19 +143,20 @@ class _TrackerPageState extends State<TrackerPage> {
                       );
                     } else if (snapshot.hasError) {
                       return SliverToBoxAdapter(
-                        child: Center(
-                          child: Text(
-                            'Failed to load data. Please try again later.',
-                            style: AppTextStyles.body,
+                        child: Text(
+                          'ERR_LOAD_DATA',
+                          style: AppTextStyles.body.copyWith(
+                            color: Colors.red,
+                            fontFamily: 'monospace',
                           ),
                         ),
                       );
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return const SliverToBoxAdapter(
-                        child: Center(
-                          child: Text(
-                            'No data available.',
-                            style: AppTextStyles.body,
+                      return SliverToBoxAdapter(
+                        child: Text(
+                          'NO_DATA',
+                          style: AppTextStyles.body.copyWith(
+                            fontFamily: 'monospace',
                           ),
                         ),
                       );

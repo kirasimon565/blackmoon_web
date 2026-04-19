@@ -19,7 +19,6 @@ class HomeScreenNew extends StatelessWidget {
               color: AppColors.background,
             ),
           ),
-          // Subtle noise overlay if desired (optional based on global bg rules)
           Positioned.fill(
             child: Image.asset(
               'assets/images/backgrounds/noise_texture.png',
@@ -36,10 +35,10 @@ class HomeScreenNew extends StatelessWidget {
               // SliverAppBar (Notch lives here)
               const SharedSliverAppBar(),
 
-              // Hero Section
+              // Hero Section - Asymmetrical, text offset
               SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 450,
+                  height: 550,
                   width: double.infinity,
                   child: Stack(
                     children: [
@@ -55,38 +54,40 @@ class HomeScreenNew extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topRight,
                               colors: [
-                                Colors.black.withAlpha(200),
+                                Colors.black.withAlpha(220),
                                 Colors.transparent,
                               ],
                             ),
                           ),
                         ),
                       ),
-                      // L2: Content
-                      Center(
+                      // L2: Content (Off-center, bottom-left aligned)
+                      Positioned(
+                        bottom: 64,
+                        left: 24,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "YOU'RE VISITING...",
+                              "STUDIO",
                               style: AppTextStyles.bodySecondary.copyWith(
-                                fontSize: 12,
-                                letterSpacing: 2,
+                                fontSize: 14,
+                                letterSpacing: 4,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.textSecondary,
                               ),
                             ),
                             const SizedBox(height: 8),
-                            const Text(
+                            Text(
                               'BLACKMOON',
-                              style: AppTextStyles.h1,
-                            ),
-                            const SizedBox(height: 16),
-                            Container(
-                              width: 40,
-                              height: 2,
-                              color: AppColors.accent,
+                              style: AppTextStyles.h1.copyWith(
+                                fontSize: 64,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: -2,
+                              ),
                             ),
                           ],
                         ),
@@ -96,41 +97,19 @@ class HomeScreenNew extends StatelessWidget {
                 ),
               ),
 
-              // Content Section (Left aligned)
-              SliverPadding(
-                padding: const EdgeInsets.all(20),
-                sliver: SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Interactive story studio',
-                        style: AppTextStyles.h2,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Building cinematic, story-driven experiences.',
-                        style:
-                            AppTextStyles.bodySecondary.copyWith(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 48)),
 
-              // Portfolio / Tracker Items
+              // Portfolio Items (Games)
               SliverPadding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
                 sliver: SliverList(
                   delegate: SliverChildListDelegate([
                     _GameCard(
                       title: 'DREADMOOR',
                       imagePath:
                           'assets/images/backgrounds/dreadmoor_forest.png',
-                      onTap: () {
-                        // Normally would navigate, but maintaining pure layout focus
-                      },
+                      onTap: () {},
                     ),
                   ]),
                 ),
@@ -160,9 +139,9 @@ class _GameCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 24),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(16),
         child: AspectRatio(
           aspectRatio: 16 / 9,
           child: Stack(
@@ -175,16 +154,16 @@ class _GameCard extends StatelessWidget {
               ),
               Positioned.fill(
                 child: Container(
-                  color:
-                      Colors.black.withAlpha(100), // Very light black overlay
+                  color: Colors.black.withAlpha(80), // Subtle dark overlay
                 ),
               ),
               Center(
                 child: Text(
                   title,
                   style: AppTextStyles.h1.copyWith(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 48,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 2,
                   ),
                 ),
               ),
