@@ -110,7 +110,8 @@ class HomeScreenNew extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         'Building cinematic, story-driven experiences.',
-                        style: AppTextStyles.bodySecondary.copyWith(fontSize: 16),
+                        style:
+                            AppTextStyles.bodySecondary.copyWith(fontSize: 16),
                       ),
                     ],
                   ),
@@ -119,12 +120,14 @@ class HomeScreenNew extends StatelessWidget {
 
               // Portfolio / Tracker Items
               SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 sliver: SliverList(
                   delegate: SliverChildListDelegate([
                     _GameCard(
                       title: 'DREADMOOR',
-                      imagePath: 'assets/images/backgrounds/dreadmoor_forest.png',
+                      imagePath:
+                          'assets/images/backgrounds/dreadmoor_forest.png',
                       onTap: () {
                         // Normally would navigate, but maintaining pure layout focus
                       },
@@ -172,7 +175,8 @@ class _GameCard extends StatelessWidget {
               ),
               Positioned.fill(
                 child: Container(
-                  color: Colors.black.withAlpha(100), // Very light black overlay
+                  color:
+                      Colors.black.withAlpha(100), // Very light black overlay
                 ),
               ),
               Center(

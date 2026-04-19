@@ -25,7 +25,8 @@ class _TrackerPageState extends State<TrackerPage> {
   }
 
   Future<List<EpisodeModel>> fetchTracker() async {
-    final response = await http.get(Uri.parse('https://solitary-glitter-c0f6.natalieparker1444.workers.dev/tracker'));
+    final response = await http.get(Uri.parse(
+        'https://solitary-glitter-c0f6.natalieparker1444.workers.dev/tracker'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
@@ -138,7 +139,8 @@ class _TrackerPageState extends State<TrackerPage> {
                       const SizedBox(height: 8),
                       Text(
                         'Track development progress across all current projects.',
-                        style: AppTextStyles.bodySecondary.copyWith(fontSize: 16),
+                        style:
+                            AppTextStyles.bodySecondary.copyWith(fontSize: 16),
                       ),
                       const SizedBox(height: 24),
                       Container(
@@ -185,7 +187,8 @@ class _TrackerPageState extends State<TrackerPage> {
                     return SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
-                          return EpisodeCardWithRebecca(episode: episodes[index]);
+                          return EpisodeCardWithRebecca(
+                              episode: episodes[index]);
                         },
                         childCount: episodes.length,
                       ),

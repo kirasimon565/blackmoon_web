@@ -40,7 +40,9 @@ class EpisodeCard extends StatelessWidget {
               Text(
                 episode.released ? 'Released' : 'In Progress',
                 style: AppTextStyles.bodySecondary.copyWith(
-                  color: episode.released ? AppColors.textPrimary : AppColors.textSecondary,
+                  color: episode.released
+                      ? AppColors.textPrimary
+                      : AppColors.textSecondary,
                 ),
               ),
             ],
@@ -50,7 +52,8 @@ class EpisodeCard extends StatelessWidget {
           const SizedBox(height: 16),
           ProgressBar(label: 'Story', percentage: episode.storyProgress),
           const SizedBox(height: 8),
-          ProgressBar(label: 'Programming', percentage: episode.programmingProgress),
+          ProgressBar(
+              label: 'Programming', percentage: episode.programmingProgress),
           const SizedBox(height: 8),
           ProgressBar(label: 'Art & Media', percentage: episode.artProgress),
           const SizedBox(height: 24),

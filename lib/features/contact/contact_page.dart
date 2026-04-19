@@ -108,7 +108,8 @@ class ContactPage extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         'For inquiries, reach out via email.',
-                        style: AppTextStyles.bodySecondary.copyWith(fontSize: 16),
+                        style:
+                            AppTextStyles.bodySecondary.copyWith(fontSize: 16),
                       ),
                       const SizedBox(height: 24),
                       Container(
