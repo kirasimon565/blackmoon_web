@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 
 class ProgressBar extends StatelessWidget {
   final String label;
@@ -13,46 +14,49 @@ class ProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 100,
-          child: Text(label, style: const TextStyle(color: AppColors.textPrimary)),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Container(
-            height: 10, // Increased height to 10px
-            decoration: BoxDecoration(
-              color: const Color(0xFF1A222C),
-              borderRadius: BorderRadius.circular(5), // Subtle rounded corners
-            ),
-            clipBehavior: Clip.hardEdge, // Ensure child container honors border radius
-            child: Row(
-              children: [
-                if (percentage > 0)
-                  Expanded(
-                    flex: percentage,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF3A7CA5),
-                        borderRadius: BorderRadius.circular(5), // Subtle rounded corners
-                      ),
-                    ),
-                  ),
-                if (percentage < 100)
-                  Expanded(
-                    flex: 100 - percentage,
-                    child: const SizedBox(),
-                  ),
-              ],
-            ),
+        Text(
+          label,
+          style: AppTextStyles.bodySecondary.copyWith(
+            color: AppColors.textPrimary,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(width: 16),
+        const SizedBox(height: 8),
         SizedBox(
-          width: 40,
-          child: Text('$percentage%', style: const TextStyle(color: AppColors.textSecondary), textAlign: TextAlign.right),
+          height: 32,
+          child: Stack(
+            children: [
+              // Background bar
+              Container(
+                width: double.infinity,
+                color: AppColors.backgroundSecondary,
+              ),
+              // Progress fill
+              FractionallySizedBox(
+                widthFactor: percentage / 100.0,
+                child: Container(
+                  color: AppColors.accent,
+                ),
+              ),
+              // Percentage text inside bar
+              Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    '$percentage%',
+                    style: AppTextStyles.bodySecondary.copyWith(
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
