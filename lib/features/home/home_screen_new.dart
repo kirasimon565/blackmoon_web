@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../shared/widgets/shared_sliver_app_bar.dart';
@@ -35,10 +36,10 @@ class HomeScreenNew extends StatelessWidget {
               // SliverAppBar (Notch lives here)
               const SharedSliverAppBar(),
 
-              // Hero Section - Asymmetrical, text offset
+              // Hero Section
               SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 550,
+                  height: 450,
                   width: double.infinity,
                   child: Stack(
                     children: [
@@ -54,8 +55,8 @@ class HomeScreenNew extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.topRight,
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
                               colors: [
                                 Colors.black.withAlpha(220),
                                 Colors.transparent,
@@ -64,17 +65,16 @@ class HomeScreenNew extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // L2: Content (Off-center, bottom-left aligned)
-                      Positioned(
-                        bottom: 64,
-                        left: 24,
+                      // L2: Content (Centered column)
+                      Center(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               "STUDIO",
+                              textAlign: TextAlign.center,
                               style: AppTextStyles.bodySecondary.copyWith(
-                                fontSize: 12, // Reduced
                                 letterSpacing: 4,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.textSecondary,
@@ -83,10 +83,14 @@ class HomeScreenNew extends StatelessWidget {
                             const SizedBox(height: 8),
                             Text(
                               'BLACKMOON',
+                              textAlign: TextAlign.center,
                               style: AppTextStyles.h1.copyWith(
-                                fontSize: 56, // Reduced
+                                fontSize: MediaQuery.of(context).size.width * 0.12 > 72.0
+                                  ? 72.0
+                                  : (MediaQuery.of(context).size.width * 0.12 < 32.0 ? 32.0 : MediaQuery.of(context).size.width * 0.12),
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: -2,
+                                height: 1.1,
                               ),
                             ),
                           ],
@@ -109,7 +113,9 @@ class HomeScreenNew extends StatelessWidget {
                       title: 'DREADMOOR',
                       imagePath:
                           'assets/images/backgrounds/dreadmoor_forest.png',
-                      onTap: () {},
+                      onTap: () {
+                        context.go('/dreadmoor');
+                      },
                     ),
                   ]),
                 ),
@@ -139,9 +145,9 @@ class _GameCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24),
+      padding: const EdgeInsets.symmetric(vertical: 12),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
         child: AspectRatio(
           aspectRatio: 16 / 9,
           child: Stack(
@@ -154,14 +160,17 @@ class _GameCard extends StatelessWidget {
               ),
               Positioned.fill(
                 child: Container(
-                  color: Colors.black.withAlpha(80), // Subtle dark overlay
+                  color: Colors.black.withAlpha(50), // Very light black overlay
                 ),
               ),
               Center(
                 child: Text(
                   title,
+                  textAlign: TextAlign.center,
                   style: AppTextStyles.h1.copyWith(
-                    fontSize: 40, // Reduced
+                    fontSize: MediaQuery.of(context).size.width * 0.08 > 48.0
+                        ? 48.0
+                        : (MediaQuery.of(context).size.width * 0.08 < 24.0 ? 24.0 : MediaQuery.of(context).size.width * 0.08),
                     fontWeight: FontWeight.w900,
                     letterSpacing: 2,
                   ),

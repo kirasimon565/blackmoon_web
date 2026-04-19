@@ -35,47 +35,61 @@ class ContactPage extends StatelessWidget {
               // SliverAppBar
               const SharedSliverAppBar(),
 
-              // Hero Section (Minimal but strong)
+              // Hero Section
               SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 500,
+                  height: 450,
                   width: double.infinity,
                   child: Stack(
                     children: [
-                      // L0: Minimal dark background
+                      // L0: Hero Background Image (using fog_main for consistency)
                       Positioned.fill(
-                        child: Container(
-                          color: AppColors.backgroundSecondary,
+                        child: Image.asset(
+                          'assets/images/backgrounds/fog_main.png',
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      // L1: Overlay Gradient
+                      // L1: Dark Overlay Gradient
                       Positioned.fill(
                         child: Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.topRight,
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
                               colors: [
-                                Colors.black.withAlpha(255),
+                                Colors.black.withAlpha(220),
                                 Colors.transparent,
                               ],
                             ),
                           ),
                         ),
                       ),
-                      // L2: Content
-                      Positioned(
-                        bottom: 64,
-                        left: 24,
+                      // L2: Content (Centered column)
+                      Center(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
+                              "INQUIRIES",
+                              textAlign: TextAlign.center,
+                              style: AppTextStyles.bodySecondary.copyWith(
+                                letterSpacing: 4,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
                               'CONTACT',
+                              textAlign: TextAlign.center,
                               style: AppTextStyles.h1.copyWith(
-                                fontSize: 56, // Reduced
+                                fontSize: MediaQuery.of(context).size.width * 0.12 > 72.0
+                                  ? 72.0
+                                  : (MediaQuery.of(context).size.width * 0.12 < 32.0 ? 32.0 : MediaQuery.of(context).size.width * 0.12),
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: -2,
+                                height: 1.1,
                               ),
                             ),
                           ],
@@ -86,20 +100,25 @@ class ContactPage extends StatelessWidget {
                 ),
               ),
 
-              const SliverToBoxAdapter(child: SizedBox(height: 100)),
+              const SliverToBoxAdapter(child: SizedBox(height: 48)),
 
-              // Content Section (Raw, large email)
+              // Content Section (Raw, large email left-aligned)
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 sliver: SliverToBoxAdapter(
-                  child: Text(
-                    'contact@blackmoonstudio.com',
-                    style: AppTextStyles.body.copyWith(
-                      fontSize: 20, // Reduced
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1,
-                      color: Colors.white,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'contact@blackmoonstudio.com',
+                        style: AppTextStyles.body.copyWith(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
