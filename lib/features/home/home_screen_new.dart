@@ -74,7 +74,7 @@ class HomeScreenNew extends StatelessWidget {
                             Text(
                               "STUDIO",
                               style: AppTextStyles.bodySecondary.copyWith(
-                                fontSize: 14,
+                                fontSize: 12, // Reduced
                                 letterSpacing: 4,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.textSecondary,
@@ -84,7 +84,7 @@ class HomeScreenNew extends StatelessWidget {
                             Text(
                               'BLACKMOON',
                               style: AppTextStyles.h1.copyWith(
-                                fontSize: 64,
+                                fontSize: 56, // Reduced
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: -2,
                               ),
@@ -161,7 +161,7 @@ class _GameCard extends StatelessWidget {
                 child: Text(
                   title,
                   style: AppTextStyles.h1.copyWith(
-                    fontSize: 48,
+                    fontSize: 40, // Reduced
                     fontWeight: FontWeight.w900,
                     letterSpacing: 2,
                   ),

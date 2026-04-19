@@ -73,7 +73,7 @@ class ContactPage extends StatelessWidget {
                             Text(
                               'CONTACT',
                               style: AppTextStyles.h1.copyWith(
-                                fontSize: 64,
+                                fontSize: 56, // Reduced
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: -2,
                               ),
@@ -95,7 +95,7 @@ class ContactPage extends StatelessWidget {
                   child: Text(
                     'contact@blackmoonstudio.com',
                     style: AppTextStyles.body.copyWith(
-                      fontSize: 24,
+                      fontSize: 20, // Reduced
                       fontWeight: FontWeight.w900,
                       letterSpacing: 1,
                       color: Colors.white,
