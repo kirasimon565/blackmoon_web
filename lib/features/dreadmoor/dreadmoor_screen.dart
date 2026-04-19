@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
-import '../../routing/routes.dart';
 
 class DreadmoorScreen extends StatelessWidget {
   const DreadmoorScreen({super.key});
@@ -95,7 +94,7 @@ class DreadmoorScreen extends StatelessWidget {
                               const SizedBox(width: 16),
                               OutlinedButton(
                                 onPressed: () {
-                                  context.go(AppRoutes.tracker);
+                                  context.go('/tracker');
                                 },
                                 child: const Text('Episode Tracker'),
                               ),

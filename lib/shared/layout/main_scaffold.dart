@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/responsive.dart';
-import '../../routing/routes.dart';
 import '../widgets/concave_notch_header.dart';
 
 class MainScaffold extends StatefulWidget {
@@ -80,93 +79,54 @@ class _OverlayMenu extends StatelessWidget {
     return Container(
       color: AppColors.background,
       child: SafeArea(
-        child: Column(
-          children: [
-            // Header area mirroring the main header
-            Container(
-              height: Responsive.isDesktop(context) ? 100 : 84,
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Row(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // TOP BAR
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: GestureDetector(
-                      onTap: () {
-                        onClose();
-                        context.go(AppRoutes.home);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            Colors.white.withAlpha(230), // 0.9 * 255
-                            BlendMode.srcATop,
-                          ),
-                          child: Image.asset(
-                            'assets/images/studio/blackmoon_logo.png',
-                            height: Responsive.isDesktop(context) ? 80 : 64,
-                          ),
-                        ),
-                      ),
-                    ),
+                  Image.asset(
+                    'assets/images/studio/blackmoon_symbol.png',
+                    height: 56,
                   ),
                   IconButton(
-                    icon: const Icon(
-                      Icons.close,
-                      color: AppColors.textPrimary,
-                      size: 28,
-                    ),
+                    icon: const Icon(Icons.close, size: 28, color: AppColors.textPrimary),
                     onPressed: onClose,
                   ),
                 ],
               ),
-            ),
-            Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _MenuNavItem(title: 'Home', route: AppRoutes.home, onClose: onClose),
-                    const SizedBox(height: 32),
-                    _MenuNavItem(title: 'Dreadmoor', route: AppRoutes.dreadmoor, onClose: onClose),
-                    const SizedBox(height: 32),
-                    _MenuNavItem(title: 'Episode Tracker', route: AppRoutes.tracker, onClose: onClose),
-                    const SizedBox(height: 32),
-                    _MenuNavItem(title: 'Contact', route: AppRoutes.contact, onClose: onClose),
-                  ],
-                ),
-              ),
-            ),
-          ],
+              const SizedBox(height: 80),
+              // NAVIGATION (LEFT ALIGNED)
+              _menuItem(context, "Home", "/"),
+              _menuItem(context, "Dreadmoor", "/dreadmoor"),
+              _menuItem(context, "Episode Tracker", "/tracker"),
+              _menuItem(context, "Contact", "/contact"),
+            ],
+          ),
         ),
       ),
     );
   }
-}
 
-class _MenuNavItem extends StatelessWidget {
-  final String title;
-  final String route;
-  final VoidCallback onClose;
-
-  const _MenuNavItem({
-    required this.title,
-    required this.route,
-    required this.onClose,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        onClose();
-        context.go(route);
-      },
-      child: Text(
-        title,
-        style: AppTextStyles.h2,
+  Widget _menuItem(BuildContext context, String title, String route) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 28),
+      child: GestureDetector(
+        onTap: () {
+          onClose();
+          context.go(route);
+        },
+        child: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFFE6EAF0),
+          ),
+        ),
       ),
     );
   }
