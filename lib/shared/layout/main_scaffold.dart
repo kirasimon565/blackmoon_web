@@ -51,6 +51,7 @@ class _MainScaffoldState extends State<MainScaffold> {
             ],
           ),
 
+          /// 🔥 FULL SCREEN MENU
           if (_isMenuOpen)
             Positioned.fill(
               child: _OverlayMenu(onClose: _closeMenu),
@@ -72,17 +73,17 @@ class _OverlayMenu extends StatelessWidget {
       color: AppColors.background,
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _menuItem(context, "Home", "/"),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
               _menuItem(context, "Dreadmoor", "/dreadmoor"),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
               _menuItem(context, "Episode Tracker", "/tracker"),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
               _menuItem(context, "Contact", "/contact"),
             ],
           ),
@@ -91,23 +92,19 @@ class _OverlayMenu extends StatelessWidget {
     );
   }
 
+  /// ✅ FIXED MENU ITEM (NO copyWith nonsense)
   Widget _menuItem(BuildContext context, String title, String route) {
     return GestureDetector(
       onTap: () {
         onClose();
         context.go(route);
       },
-      child: const Text(
-        '',
-        style: TextStyle(fontSize: 28),
-      ),
-    ).copyWith(
       child: Text(
         title,
-        style: const TextStyle(
-          fontSize: 28,
+        style: AppTextStyles.h1.copyWith(
+          fontSize: 32,
           fontWeight: FontWeight.w600,
-          color: Color(0xFFE6EAF0),
+          color: AppColors.textPrimary,
         ),
       ),
     );
