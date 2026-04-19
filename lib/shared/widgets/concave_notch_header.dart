@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
-import '../../core/utils/responsive.dart';
 
 class ConcaveNotchHeader extends StatelessWidget {
   final VoidCallback onMenuToggle;
@@ -15,8 +14,6 @@ class ConcaveNotchHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDesktop = Responsive.isDesktop(context);
-
     return ClipPath(
       clipper: NotchClipper(),
       child: Container(
@@ -25,27 +22,15 @@ class ConcaveNotchHeader extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Left: BLACKMOON logo
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () => context.go('/'),
-                child: ColorFiltered(
-                  colorFilter: ColorFilter.mode(
-                    Colors.white.withAlpha(230),
-                    BlendMode.srcATop,
-                  ),
-                  child: Image.asset(
-                    'assets/images/studio/blackmoon_logo.png',
-                    height: isDesktop ? 95 : 85,
-                  ),
-                ),
+            GestureDetector(
+              onTap: () => context.go('/'),
+              child: Image.asset(
+                'assets/images/studio/blackmoon_logo.png',
+                height: 40,
+                fit: BoxFit.contain,
               ),
             ),
-
-            // Right: menu icon
             IconButton(
               icon: Icon(
                 isMenuOpen ? Icons.close : Icons.menu,
@@ -65,15 +50,19 @@ class NotchClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     final path = Path();
-    path.lineTo(0, size.height - 20);
+
+    path.lineTo(0, size.height - 28);
+
     path.quadraticBezierTo(
       size.width / 2,
-      size.height + 40,
+      size.height + 55,
       size.width,
-      size.height - 20,
+      size.height - 28,
     );
+
     path.lineTo(size.width, 0);
     path.close();
+
     return path;
   }
 
