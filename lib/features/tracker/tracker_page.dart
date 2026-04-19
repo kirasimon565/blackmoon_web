@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/layout/responsive_container.dart';
 import 'models/episode_model.dart';
-import 'widgets/episode_card.dart';
+import 'widgets/episode_card_with_rebecca.dart';
 
 class TrackerPage extends StatefulWidget {
   const TrackerPage({super.key});
@@ -72,7 +72,7 @@ class _TrackerPageState extends State<TrackerPage> {
 
                 final episodes = snapshot.data!;
                 return Column(
-                  children: episodes.map((episode) => EpisodeCard(episode: episode)).toList(),
+                  children: episodes.map((episode) => EpisodeCardWithRebecca(episode: episode)).toList(),
                 );
               },
             ),

@@ -21,7 +21,7 @@ class EpisodeCard extends StatelessWidget {
         border: Border.all(color: AppColors.trackerBackground, width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+            color: Colors.black.withAlpha(64),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -38,9 +38,9 @@ class EpisodeCard extends StatelessWidget {
                 style: AppTextStyles.h2.copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                episode.status,
+                episode.released ? 'Released' : 'In Progress',
                 style: AppTextStyles.bodySecondary.copyWith(
-                  color: episode.status == 'Released' ? AppColors.textPrimary : AppColors.textSecondary,
+                  color: episode.released ? AppColors.textPrimary : AppColors.textSecondary,
                 ),
               ),
             ],

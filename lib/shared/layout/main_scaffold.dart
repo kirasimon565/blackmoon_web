@@ -4,7 +4,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/responsive.dart';
 import '../../routing/routes.dart';
-import 'responsive_container.dart';
+import '../widgets/concave_notch_header.dart';
 
 class MainScaffold extends StatefulWidget {
   final Widget child;
@@ -41,12 +41,16 @@ class _MainScaffoldState extends State<MainScaffold> {
           // Main Content
           Column(
             children: [
-              _Header(onMenuToggle: _toggleMenu, isMenuOpen: _isMenuOpen),
+              ConcaveNotchHeader(onMenuToggle: _toggleMenu, isMenuOpen: _isMenuOpen),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      widget.child,
+                      // To ensure stacked pages like Home and Dreadmoor can fill height
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height - (Responsive.isDesktop(context) ? 100 : 84),
+                        child: widget.child,
+                      ),
                       const _Footer(),
                     ],
                   ),
@@ -61,76 +65,6 @@ class _MainScaffoldState extends State<MainScaffold> {
               child: _MobileOverlayMenu(onClose: _closeMenu),
             ),
         ],
-      ),
-    );
-  }
-}
-
-class _Header extends StatelessWidget {
-  final VoidCallback onMenuToggle;
-  final bool isMenuOpen;
-
-  const _Header({required this.onMenuToggle, required this.isMenuOpen});
-
-  @override
-  Widget build(BuildContext context) {
-    final bool isDesktop = Responsive.isDesktop(context);
-    final double logoHeight = isDesktop ? 80.0 : 64.0;
-
-    return Container(
-      color: AppColors.background,
-      height: isDesktop ? 100 : 84, // Adjust container height to vertically center logo with less empty space
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: ResponsiveContainer(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Logo
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () => context.go(AppRoutes.home),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: ColorFiltered(
-                    colorFilter: ColorFilter.mode(
-                      Colors.white.withAlpha(230), // 0.9 opacity overlay (0.9 * 255)
-                      BlendMode.srcATop,
-                    ),
-                    child: Image.asset(
-                      'assets/images/studio/blackmoon_logo.png',
-                      height: logoHeight,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            // Navigation
-            if (isDesktop)
-              Row(
-                children: [
-                  _NavItem(title: 'Home', route: AppRoutes.home),
-                  const SizedBox(width: 32),
-                  _NavItem(title: 'Dreadmoor', route: AppRoutes.dreadmoor),
-                  const SizedBox(width: 32),
-                  _NavItem(title: 'Episode Tracker', route: AppRoutes.tracker),
-                  const SizedBox(width: 32),
-                  _NavItem(title: 'Contact', route: AppRoutes.contact),
-                ],
-              )
-            else
-              IconButton(
-                icon: Icon(
-                  isMenuOpen ? Icons.close : Icons.menu,
-                  color: AppColors.textPrimary,
-                  size: 28,
-                ),
-                onPressed: onMenuToggle,
-              ),
-          ],
-        ),
       ),
     );
   }

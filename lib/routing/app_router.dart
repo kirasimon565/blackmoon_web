@@ -1,8 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'routes.dart';
-import '../features/home/home_page.dart';
-import '../features/dreadmoor/dreadmoor_page.dart';
+import '../features/home/home_screen_new.dart';
+import '../features/dreadmoor/dreadmoor_screen.dart';
 import '../features/tracker/tracker_page.dart';
 import '../features/contact/contact_page.dart';
 import '../shared/layout/main_scaffold.dart';
@@ -22,11 +22,11 @@ final GoRouter appRouter = GoRouter(
       routes: [
         GoRoute(
           path: AppRoutes.home,
-          builder: (context, state) => const HomePage(),
+          builder: (context, state) => const HomeScreenNew(),
         ),
         GoRoute(
           path: AppRoutes.dreadmoor,
-          builder: (context, state) => const DreadmoorPage(),
+          builder: (context, state) => const DreadmoorScreen(),
         ),
         GoRoute(
           path: AppRoutes.tracker,
