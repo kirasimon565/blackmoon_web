@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
-import '../../../shared/layout/responsive_container.dart';
+import '../../../shared/widgets/shared_sliver_app_bar.dart';
+import '../../../shared/widgets/shared_footer.dart';
 import 'models/episode_model.dart';
 import 'widgets/episode_card_with_rebecca.dart';
 
@@ -36,48 +38,167 @@ class _TrackerPageState extends State<TrackerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveContainer(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 48.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Episode Tracker', style: AppTextStyles.h1),
-            const SizedBox(height: 16),
-            const Text(
-              'Track development progress and episode status.',
-              style: AppTextStyles.body,
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: Stack(
+        children: [
+          // L0: Global Background
+          Positioned.fill(
+            child: Container(
+              color: AppColors.background,
             ),
-            const SizedBox(height: 48),
-            FutureBuilder<List<EpisodeModel>>(
-              future: _episodesFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text(
-                      'Failed to load data. Please try again later.',
-                      style: AppTextStyles.body,
-                    ),
-                  );
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Center(
-                    child: Text(
-                      'No data available.',
-                      style: AppTextStyles.body,
-                    ),
-                  );
-                }
+          ),
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/backgrounds/noise_texture.png',
+              fit: BoxFit.cover,
+              opacity: const AlwaysStoppedAnimation(0.05),
+              errorBuilder: (context, error, stackTrace) => const SizedBox(),
+            ),
+          ),
 
-                final episodes = snapshot.data!;
-                return Column(
-                  children: episodes.map((episode) => EpisodeCardWithRebecca(episode: episode)).toList(),
-                );
-              },
-            ),
-          ],
-        ),
+          // L1: CustomScrollView
+          CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              // SliverAppBar
+              const SharedSliverAppBar(),
+
+              // Hero Section
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 450,
+                  width: double.infinity,
+                  child: Stack(
+                    children: [
+                      // L0: Hero Background Image (Using fog for tracker)
+                      Positioned.fill(
+                        child: Image.asset(
+                          'assets/images/backgrounds/fog_main.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      // L1: Dark Overlay Gradient
+                      Positioned.fill(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              colors: [
+                                Colors.black.withAlpha(200),
+                                Colors.transparent,
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      // L2: Content
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "DEVELOPMENT",
+                              style: AppTextStyles.bodySecondary.copyWith(
+                                fontSize: 12,
+                                letterSpacing: 2,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            const Text(
+                              'TRACKER',
+                              style: AppTextStyles.h1,
+                            ),
+                            const SizedBox(height: 16),
+                            Container(
+                              width: 40,
+                              height: 2,
+                              color: AppColors.accent,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              // Content Section
+              SliverPadding(
+                padding: const EdgeInsets.all(20),
+                sliver: SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Episode Status',
+                        style: AppTextStyles.h2,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Track development progress across all current projects.',
+                        style: AppTextStyles.bodySecondary.copyWith(fontSize: 16),
+                      ),
+                      const SizedBox(height: 24),
+                      Container(
+                        width: double.infinity,
+                        height: 2,
+                        color: AppColors.backgroundSecondary,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              // Items Section (Episode List)
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                sliver: FutureBuilder<List<EpisodeModel>>(
+                  future: _episodesFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const SliverToBoxAdapter(
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    } else if (snapshot.hasError) {
+                      return SliverToBoxAdapter(
+                        child: Center(
+                          child: Text(
+                            'Failed to load data. Please try again later.',
+                            style: AppTextStyles.body,
+                          ),
+                        ),
+                      );
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const SliverToBoxAdapter(
+                        child: Center(
+                          child: Text(
+                            'No data available.',
+                            style: AppTextStyles.body,
+                          ),
+                        ),
+                      );
+                    }
+
+                    final episodes = snapshot.data!;
+                    return SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          return EpisodeCardWithRebecca(episode: episodes[index]);
+                        },
+                        childCount: episodes.length,
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              // Footer
+              const SharedFooter(),
+            ],
+          ),
+        ],
       ),
     );
   }

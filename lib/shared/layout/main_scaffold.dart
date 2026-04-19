@@ -2,25 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
-import '../widgets/concave_notch_header.dart';
 
 class MainScaffold extends StatefulWidget {
   final Widget child;
 
   const MainScaffold({super.key, required this.child});
 
+  static MainScaffoldState? of(BuildContext context) {
+    return context.findAncestorStateOfType<MainScaffoldState>();
+  }
+
   @override
-  State<MainScaffold> createState() => _MainScaffoldState();
+  State<MainScaffold> createState() => MainScaffoldState();
 }
 
-class _MainScaffoldState extends State<MainScaffold> {
+class MainScaffoldState extends State<MainScaffold> {
   bool _isMenuOpen = false;
 
-  void _toggleMenu() {
+  void toggleMenu() {
     setState(() => _isMenuOpen = !_isMenuOpen);
   }
 
-  void _closeMenu() {
+  void closeMenu() {
     if (_isMenuOpen) {
       setState(() => _isMenuOpen = false);
     }
@@ -32,29 +35,12 @@ class _MainScaffoldState extends State<MainScaffold> {
       backgroundColor: AppColors.background,
       body: Stack(
         children: [
-          Column(
-            children: [
-              ConcaveNotchHeader(
-                onMenuToggle: _toggleMenu,
-                isMenuOpen: _isMenuOpen,
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      widget.child,
-                      const _Footer(),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+          widget.child,
 
           /// 🔥 FULL SCREEN MENU
           if (_isMenuOpen)
             Positioned.fill(
-              child: _OverlayMenu(onClose: _closeMenu),
+              child: _OverlayMenu(onClose: closeMenu),
             ),
         ],
       ),
@@ -105,23 +91,6 @@ class _OverlayMenu extends StatelessWidget {
           fontSize: 32,
           fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
-        ),
-      ),
-    );
-  }
-}
-
-class _Footer extends StatelessWidget {
-  const _Footer();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 48),
-      child: const Center(
-        child: Text(
-          '© BLACKMOON Studio',
-          style: AppTextStyles.bodySecondary,
         ),
       ),
     );
