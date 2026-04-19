@@ -35,6 +35,21 @@ class MainScaffoldState extends State<MainScaffold> {
       backgroundColor: AppColors.background,
       body: Stack(
         children: [
+          // Global Persistent Background
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/backgrounds/fog_main.png',
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) =>
+                  Container(color: AppColors.background),
+            ),
+          ),
+          Positioned.fill(
+            child: Container(
+              color: AppColors.background.withAlpha((0.85 * 255).toInt()),
+            ),
+          ),
+          // Content
           widget.child,
 
           /// 🔥 FULL SCREEN MENU

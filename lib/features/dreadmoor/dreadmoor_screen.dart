@@ -39,7 +39,7 @@ class DreadmoorScreen extends StatelessWidget {
               // Hero Section
               SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 600,
+                  height: 450,
                   width: double.infinity,
                   child: Stack(
                     children: [
@@ -55,8 +55,8 @@ class DreadmoorScreen extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.topRight,
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
                               colors: [
                                 Colors.black.withAlpha(220),
                                 Colors.transparent,
@@ -65,17 +65,16 @@ class DreadmoorScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // L2: Content (Off-center, bottom-left aligned)
-                      Positioned(
-                        bottom: 64,
-                        left: 24,
+                      // L2: Content (Centered column)
+                      Center(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               "CURRENT PROJECT",
+                              textAlign: TextAlign.center,
                               style: AppTextStyles.bodySecondary.copyWith(
-                                fontSize: 12, // Reduced
                                 letterSpacing: 4,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.accent,
@@ -84,10 +83,14 @@ class DreadmoorScreen extends StatelessWidget {
                             const SizedBox(height: 8),
                             Text(
                               'DREADMOOR',
+                              textAlign: TextAlign.center,
                               style: AppTextStyles.h1.copyWith(
-                                fontSize: 56, // Reduced
+                                fontSize: MediaQuery.of(context).size.width * 0.12 > 72.0
+                                  ? 72.0
+                                  : (MediaQuery.of(context).size.width * 0.12 < 32.0 ? 32.0 : MediaQuery.of(context).size.width * 0.12),
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: -2,
+                                height: 1.1,
                               ),
                             ),
                           ],

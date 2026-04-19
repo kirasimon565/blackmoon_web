@@ -65,10 +65,10 @@ class _TrackerPageState extends State<TrackerPage> {
               // SliverAppBar
               const SharedSliverAppBar(),
 
-              // Hero Section - Asymmetrical, Text offset
+              // Hero Section
               SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 500,
+                  height: 450,
                   width: double.infinity,
                   child: Stack(
                     children: [
@@ -84,28 +84,26 @@ class _TrackerPageState extends State<TrackerPage> {
                         child: Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
                               colors: [
-                                AppColors.background.withAlpha(255),
-                                AppColors.background.withAlpha(150),
+                                Colors.black.withAlpha(220),
                                 Colors.transparent,
                               ],
                             ),
                           ),
                         ),
                       ),
-                      // L2: Content (Off-center, bottom-left aligned)
-                      Positioned(
-                        bottom: 48,
-                        left: 24,
+                      // L2: Content (Centered column)
+                      Center(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               "SYSTEM STATUS",
+                              textAlign: TextAlign.center,
                               style: AppTextStyles.bodySecondary.copyWith(
-                                fontSize: 12, // Reduced
                                 letterSpacing: 4,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.accent,
@@ -114,10 +112,14 @@ class _TrackerPageState extends State<TrackerPage> {
                             const SizedBox(height: 8),
                             Text(
                               'TRACKER',
+                              textAlign: TextAlign.center,
                               style: AppTextStyles.h1.copyWith(
-                                fontSize: 56, // Reduced
+                                fontSize: MediaQuery.of(context).size.width * 0.12 > 72.0
+                                  ? 72.0
+                                  : (MediaQuery.of(context).size.width * 0.12 < 32.0 ? 32.0 : MediaQuery.of(context).size.width * 0.12),
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: -2,
+                                height: 1.1,
                               ),
                             ),
                           ],

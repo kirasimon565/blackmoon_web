@@ -14,16 +14,42 @@ class EpisodeCardWithRebecca extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 64), // Large spacing between items
+      padding: const EdgeInsets.only(bottom: 48),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            episode.title.toUpperCase(),
-            style: AppTextStyles.h1.copyWith(
-              fontSize: 36, // Reduced
-              fontWeight: FontWeight.w900,
-              letterSpacing: -1,
+          // Poster-style title header
+          ClipRRect(
+            borderRadius: BorderRadius.circular(24),
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: Container(
+                      color: const Color(0xFF11161D), // Dark surface
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: Container(
+                      color: Colors.black.withAlpha(50), // Very light black overlay
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      episode.title.toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.h1.copyWith(
+                        fontSize: MediaQuery.of(context).size.width * 0.08 > 48.0
+                            ? 48.0
+                            : (MediaQuery.of(context).size.width * 0.08 < 24.0 ? 24.0 : MediaQuery.of(context).size.width * 0.08),
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -1,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 32),
