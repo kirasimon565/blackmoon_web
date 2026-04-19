@@ -24,6 +24,7 @@ flutter:
     - assets/images/studio/
     - assets/images/backgrounds/
     - assets/images/ui/
+    - assets/images/characters/
 
   fonts:
     - family: Inter

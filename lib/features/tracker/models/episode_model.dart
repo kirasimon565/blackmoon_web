@@ -1,6 +1,6 @@
 class EpisodeModel {
   final String title;
-  final String status;
+  final bool released;
   final int storyProgress;
   final int programmingProgress;
   final int artProgress;
@@ -10,7 +10,7 @@ class EpisodeModel {
 
   EpisodeModel({
     required this.title,
-    required this.status,
+    required this.released,
     required this.storyProgress,
     required this.programmingProgress,
     required this.artProgress,
@@ -25,7 +25,7 @@ class EpisodeModel {
 
     return EpisodeModel(
       title: json['title'] ?? '',
-      status: json['status'] ?? '',
+      released: json['released'] ?? false,
       storyProgress: progress['story'] ?? 0,
       programmingProgress: progress['programming'] ?? 0,
       artProgress: progress['art'] ?? 0,
