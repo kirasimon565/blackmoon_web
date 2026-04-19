@@ -113,7 +113,7 @@ class DreadmoorScreen extends StatelessWidget {
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 48, vertical: 20),
+                              horizontal: 24, vertical: 12),
                           backgroundColor: Colors.white,
                           foregroundColor: Colors.black,
                           shape: RoundedRectangleBorder(
@@ -129,12 +129,12 @@ class DreadmoorScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 24),
+                      const SizedBox(width: 16),
                       OutlinedButton(
                         onPressed: () => context.go('/tracker'),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 32, vertical: 20),
+                              horizontal: 24, vertical: 12),
                           foregroundColor: Colors.white,
                           side:
                               const BorderSide(color: Colors.white24, width: 2),
