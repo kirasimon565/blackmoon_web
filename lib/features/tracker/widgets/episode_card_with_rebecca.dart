@@ -21,7 +21,7 @@ class EpisodeCardWithRebecca extends StatelessWidget {
           Text(
             episode.title.toUpperCase(),
             style: AppTextStyles.h1.copyWith(
-              fontSize: 48,
+              fontSize: 36, // Reduced
               fontWeight: FontWeight.w900,
               letterSpacing: -1,
             ),

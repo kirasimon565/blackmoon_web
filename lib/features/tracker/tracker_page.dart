@@ -105,7 +105,7 @@ class _TrackerPageState extends State<TrackerPage> {
                             Text(
                               "SYSTEM STATUS",
                               style: AppTextStyles.bodySecondary.copyWith(
-                                fontSize: 14,
+                                fontSize: 12, // Reduced
                                 letterSpacing: 4,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.accent,
@@ -115,7 +115,7 @@ class _TrackerPageState extends State<TrackerPage> {
                             Text(
                               'TRACKER',
                               style: AppTextStyles.h1.copyWith(
-                                fontSize: 64,
+                                fontSize: 56, // Reduced
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: -2,
                               ),

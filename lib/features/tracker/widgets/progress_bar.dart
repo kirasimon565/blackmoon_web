@@ -21,7 +21,7 @@ class ProgressBar extends StatelessWidget {
           style: const TextStyle(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.w800,
-            fontSize: 14,
+            fontSize: 12, // Reduced
             letterSpacing: 1.5,
             fontFamily: 'Inter',
           ),
