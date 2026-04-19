@@ -70,42 +70,132 @@ class _OverlayMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.background,
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _menuItem(context, "Home", "/"),
-              const SizedBox(height: 32),
-              _menuItem(context, "Dreadmoor", "/dreadmoor"),
-              const SizedBox(height: 32),
-              _menuItem(context, "Episode Tracker", "/tracker"),
-              const SizedBox(height: 32),
-              _menuItem(context, "Contact", "/contact"),
-            ],
+    return Material(
+      color: Colors.transparent,
+      child: Stack(
+        children: [
+          // Background Gradient (Dark Blue -> Black)
+          Positioned.fill(
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFF0F172A), // Dark blue tint
+                    Color(0xFF0B0F14), // AppColors.background
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
+          // Subtle Noise Texture
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/backgrounds/noise_texture.png',
+              fit: BoxFit.cover,
+              opacity: const AlwaysStoppedAnimation(0.08),
+            ),
+          ),
+          // Top Bar (Logo and Close Button)
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(
+                      'assets/images/studio/blackmoon_logo.png',
+                      width: 120, // minimum 120px
+                      fit: BoxFit.contain,
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.close,
+                        color: AppColors.textPrimary,
+                        size: 32,
+                      ),
+                      onPressed: onClose,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // Center Column (Nav Items)
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _NavItem(title: "HOME", route: "/", onClose: onClose),
+                  const SizedBox(height: 28),
+                  _NavItem(title: "DREADMOOR", route: "/dreadmoor", onClose: onClose),
+                  const SizedBox(height: 28),
+                  _NavItem(title: "EPISODE TRACKER", route: "/tracker", onClose: onClose),
+                  const SizedBox(height: 28),
+                  _NavItem(title: "CONTACT", route: "/contact", onClose: onClose),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
+}
 
-  /// ✅ FIXED MENU ITEM (NO copyWith nonsense)
-  Widget _menuItem(BuildContext context, String title, String route) {
-    return GestureDetector(
-      onTap: () {
-        onClose();
-        context.go(route);
-      },
-      child: Text(
-        title,
-        style: AppTextStyles.h1.copyWith(
-          fontSize: 32,
-          fontWeight: FontWeight.w600,
-          color: AppColors.textPrimary,
+class _NavItem extends StatefulWidget {
+  final String title;
+  final String route;
+  final VoidCallback onClose;
+
+  const _NavItem({
+    required this.title,
+    required this.route,
+    required this.onClose,
+  });
+
+  @override
+  State<_NavItem> createState() => _NavItemState();
+}
+
+class _NavItemState extends State<_NavItem> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTapDown: (_) => setState(() => _isHovered = true),
+        onTapUp: (_) => setState(() => _isHovered = false),
+        onTapCancel: () => setState(() => _isHovered = false),
+        onTap: () {
+          widget.onClose();
+          context.go(widget.route);
+        },
+        child: AnimatedOpacity(
+          duration: const Duration(milliseconds: 200),
+          opacity: _isHovered ? 1.0 : 0.6,
+          child: Text(
+            widget.title,
+            style: AppTextStyles.h1.copyWith(
+              fontSize: 36,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 2,
+              color: Colors.white,
+            ),
+          ),
         ),
       ),
     );
