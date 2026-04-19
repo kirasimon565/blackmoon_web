@@ -8,114 +8,71 @@ class DreadmoorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // Background Base Color
-        Positioned.fill(
-          child: Container(
-            color: AppColors.background,
-          ),
-        ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isMobile = constraints.maxWidth < 700;
 
-        // Dreadmoor Forest Background Image
-        Positioned.fill(
-          child: Image.asset(
-            'assets/images/backgrounds/dreadmoor_forest.png',
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return const SizedBox.shrink();
-            },
-          ),
-        ),
-
-        // Noise Texture
-        Positioned.fill(
-          child: Opacity(
-            opacity: 0.1,
-            child: Image.asset(
-              'assets/images/backgrounds/noise_texture.png',
-              fit: BoxFit.cover,
-              repeat: ImageRepeat.repeat,
-              errorBuilder: (context, error, stackTrace) {
-                return const SizedBox.shrink();
-              },
+        final content = Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('DREADMOOR', style: AppTextStyles.h1),
+            const SizedBox(height: 16),
+            const Text(
+              'A story told through conversations',
+              style: AppTextStyles.bodySecondary,
             ),
-          ),
-        ),
+            const SizedBox(height: 48),
+            Row(
+              children: [
+                const ElevatedButton(
+                  onPressed: null,
+                  child: Text('Play'),
+                ),
+                const SizedBox(width: 16),
+                OutlinedButton(
+                  onPressed: () => context.go('/tracker'),
+                  child: const Text('Episode Tracker'),
+                ),
+              ],
+            ),
+          ],
+        );
 
-        // Dark Overlay Gradient
-        Positioned.fill(
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  AppColors.background.withAlpha(220),
-                  AppColors.background.withAlpha(80),
-                ],
+        return Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset(
+                'assets/images/backgrounds/dreadmoor_forest.png',
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-        ),
 
-        // Main Content Constraints
-        Positioned.fill(
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 1100),
+            Positioned.fill(
+              child: Container(
+                color: AppColors.background.withAlpha(200),
+              ),
+            ),
+
+            Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 48),
-                child: Row(
-                  children: [
-                    // Left-aligned content
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'DREADMOOR',
-                            style: AppTextStyles.h1,
-                          ),
-                          const SizedBox(height: 16),
-                          const Text(
-                            'A story told through conversations',
-                            style: AppTextStyles.subtitle,
-                          ),
-                          const SizedBox(height: 48),
-                          Row(
-                            children: [
-                              const ElevatedButton(
-                                onPressed: null, // Do nothing for now
-                                child: Text('Play'),
-                              ),
-                              const SizedBox(width: 16),
-                              OutlinedButton(
-                                onPressed: () {
-                                  context.go('/tracker');
-                                },
-                                child: const Text('Episode Tracker'),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-
-                    // Right side = empty atmospheric space
-                    const Expanded(
-                      flex: 1,
-                      child: SizedBox(),
-                    ),
-                  ],
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 1100),
+                  child: isMobile
+                      ? content
+                      : Row(
+                          children: [
+                            Expanded(child: content),
+                            const Expanded(child: SizedBox()),
+                          ],
+                        ),
                 ),
               ),
             ),
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 }
