@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../../routing/routes.dart';
 
 class HomeScreenNew extends StatelessWidget {
   const HomeScreenNew({super.key});
@@ -88,7 +90,7 @@ class HomeScreenNew extends StatelessWidget {
                           const SizedBox(height: 48),
                           ElevatedButton(
                             onPressed: () {
-                              // Enter action
+                              context.go(AppRoutes.dreadmoor);
                             },
                             child: const Text('Enter'),
                           ),
