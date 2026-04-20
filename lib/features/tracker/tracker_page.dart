@@ -39,7 +39,6 @@ class _TrackerPageState extends State<TrackerPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.black, // Dark background
       body: Stack(
@@ -65,15 +64,14 @@ class _TrackerPageState extends State<TrackerPage> {
             right: -40,
             top: 0,
             bottom: 0,
-
             child: Transform.scale(
               scale: 1.15,
               alignment: Alignment.centerRight,
-            child: Image.asset(
-              'assets/images/characters/rebecca_symbol_base.png',
-              fit: BoxFit.fitHeight,
-              errorBuilder: (context, error, stackTrace) => const SizedBox(),
-            ),
+              child: Image.asset(
+                'assets/images/characters/rebecca_symbol_base.png',
+                fit: BoxFit.fitHeight,
+                errorBuilder: (context, error, stackTrace) => const SizedBox(),
+              ),
             ),
           ),
 
@@ -86,7 +84,6 @@ class _TrackerPageState extends State<TrackerPage> {
               size: const Size(24, 24),
             ),
           ),
-
 
           // L4: CustomScrollView
           CustomScrollView(

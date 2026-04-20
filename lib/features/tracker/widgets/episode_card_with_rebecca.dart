@@ -34,21 +34,21 @@ class EpisodeCardWithRebecca extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-              ProgressBar(
-                label: 'Story',
-                percentage: episode.storyProgress,
-              ),
-              const SizedBox(height: 24),
-              ProgressBar(
-                label: 'Programming',
-                percentage: episode.programmingProgress,
-              ),
-              const SizedBox(height: 24),
-              ProgressBar(
-                label: 'Art & Media',
-                percentage: episode.artProgress,
-              ),
-            ],
+            ProgressBar(
+              label: 'Story',
+              percentage: episode.storyProgress,
+            ),
+            const SizedBox(height: 24),
+            ProgressBar(
+              label: 'Programming',
+              percentage: episode.programmingProgress,
+            ),
+            const SizedBox(height: 24),
+            ProgressBar(
+              label: 'Art & Media',
+              percentage: episode.artProgress,
+            ),
+          ],
         ),
       ),
     );
