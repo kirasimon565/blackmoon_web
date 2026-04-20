@@ -105,7 +105,8 @@ class _OverlayMenu extends StatelessWidget {
             child: SafeArea(
               bottom: false,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -137,11 +138,18 @@ class _OverlayMenu extends StatelessWidget {
                 children: [
                   _NavItem(title: "HOME", route: "/", onClose: onClose),
                   const SizedBox(height: 28),
-                  _NavItem(title: "DREADMOOR", route: "/dreadmoor", onClose: onClose),
+                  _NavItem(
+                      title: "DREADMOOR",
+                      route: "/dreadmoor",
+                      onClose: onClose),
                   const SizedBox(height: 28),
-                  _NavItem(title: "EPISODE TRACKER", route: "/tracker", onClose: onClose),
+                  _NavItem(
+                      title: "EPISODE TRACKER",
+                      route: "/tracker",
+                      onClose: onClose),
                   const SizedBox(height: 28),
-                  _NavItem(title: "CONTACT", route: "/contact", onClose: onClose),
+                  _NavItem(
+                      title: "CONTACT", route: "/contact", onClose: onClose),
                 ],
               ),
             ),

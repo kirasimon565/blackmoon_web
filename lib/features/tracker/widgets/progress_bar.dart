@@ -28,19 +28,19 @@ class ProgressBar extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         SizedBox(
-          height: 32, // Full bar height
+          height: 38, // Full bar height
           child: Stack(
             children: [
               // Background bar
               Container(
                 width: double.infinity,
-                color: AppColors.backgroundSecondary, // dark background
+                color: const Color(0xFF111418), // dark track background
               ),
               // Progress fill
               FractionallySizedBox(
                 widthFactor: percentage / 100.0,
                 child: Container(
-                  color: AppColors.accent, // Accent color fill
+                  color: const Color(0xFF5C8FAF), // Richer accent color fill
                 ),
               ),
               // Percentage text aligned right inside the bar
@@ -51,7 +51,7 @@ class ProgressBar extends StatelessWidget {
                   child: Text(
                     '$percentage%',
                     style: const TextStyle(
-                      color: AppColors.textPrimary,
+                      color: Color(0xFFD0D4D8), // Slightly dimmed white
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),

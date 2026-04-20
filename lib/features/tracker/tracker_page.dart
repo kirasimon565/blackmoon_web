@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/shared_sliver_app_bar.dart';
 import '../../../shared/widgets/shared_footer.dart';
 import 'models/episode_model.dart';
 import 'widgets/episode_card_with_rebecca.dart';
+import 'widgets/black_rose_painter.dart';
 
 class TrackerPage extends StatefulWidget {
   const TrackerPage({super.key});
@@ -39,26 +39,70 @@ class _TrackerPageState extends State<TrackerPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Colors.black, // Dark background
       body: Stack(
         children: [
           // L0: Global Background
           Positioned.fill(
             child: Container(
-              color: AppColors.background,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFF000000),
+                    Color(0xFF05080C),
+                  ],
+                ),
+              ),
             ),
           ),
-          Positioned.fill(
+
+          // L1: Rebecca Image
+          Positioned(
+            right: 0,
+            top: 0,
+            bottom: 0,
+            width: screenWidth * 0.45,
             child: Image.asset(
-              'assets/images/backgrounds/noise_texture.png',
+              'assets/images/characters/rebecca_symbol_base.png',
               fit: BoxFit.cover,
-              opacity: const AlwaysStoppedAnimation(0.05),
               errorBuilder: (context, error, stackTrace) => const SizedBox(),
             ),
           ),
 
-          // L1: CustomScrollView
+          // L2: Black Rose Symbol
+          Positioned(
+            top: 80,
+            right: 60,
+            child: CustomPaint(
+              painter: BlackRosePainter(),
+              size: const Size(24, 24),
+            ),
+          ),
+
+          // L3: Solid Black Left-to-Transparent Gradient Overlay
+          Positioned.fill(
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Colors.black,
+                    Colors.black,
+                    Colors.transparent,
+                  ],
+                  stops: [0.0, 0.6, 1.0],
+                ),
+              ),
+            ),
+          ),
+
+          // L4: CustomScrollView
           CustomScrollView(
             physics: const BouncingScrollPhysics(),
             slivers: [
@@ -67,71 +111,52 @@ class _TrackerPageState extends State<TrackerPage> {
 
               // Hero Section
               SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 450,
-                  width: double.infinity,
-                  child: Stack(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 120, left: 24, right: 24, bottom: 48),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // L0: Hero Background Image
-                      Positioned.fill(
-                        child: Image.asset(
-                          'assets/images/backgrounds/fog_main.png',
-                          fit: BoxFit.cover,
+                      Text(
+                        "Welcome to Dreadmoor.",
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.bodySecondary.copyWith(
+                          color: Colors.white.withAlpha(200),
+                          letterSpacing: 1.5,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
-                      // L1: Dark Overlay Gradient
-                      Positioned.fill(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [
-                                Colors.black.withAlpha(220),
-                                Colors.transparent,
-                              ],
-                            ),
-                          ),
+                      const SizedBox(height: 12),
+                      Text(
+                        "Nothing here is ever as it seems.",
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.bodySecondary.copyWith(
+                          color: Colors.white.withAlpha(200),
+                          letterSpacing: 1.5,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
-                      // L2: Content (Centered column)
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "SYSTEM STATUS",
-                              textAlign: TextAlign.center,
-                              style: AppTextStyles.bodySecondary.copyWith(
-                                letterSpacing: 4,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.accent,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'TRACKER',
-                              textAlign: TextAlign.center,
-                              style: AppTextStyles.h1.copyWith(
-                                fontSize: MediaQuery.of(context).size.width * 0.12 > 72.0
-                                  ? 72.0
-                                  : (MediaQuery.of(context).size.width * 0.12 < 32.0 ? 32.0 : MediaQuery.of(context).size.width * 0.12),
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: -2,
-                                height: 1.1,
-                              ),
-                            ),
-                          ],
+                      const SizedBox(height: 32),
+                      Text(
+                        "EPISODE TRACKER",
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.h1.copyWith(
+                          fontSize: MediaQuery.of(context).size.width * 0.12 >
+                                  72.0
+                              ? 72.0
+                              : (MediaQuery.of(context).size.width * 0.12 < 32.0
+                                  ? 32.0
+                                  : MediaQuery.of(context).size.width * 0.12),
+                          fontWeight: FontWeight.w900, // Very heavy weight
+                          letterSpacing: -2, // Tight tracking
+                          color: Colors.white, // Pure white
+                          height: 1.1,
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-
-              // Spacer instead of explanation text
-              const SliverToBoxAdapter(child: SizedBox(height: 48)),
 
               // Items Section (Episode List)
               SliverPadding(
