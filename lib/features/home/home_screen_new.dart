@@ -144,9 +144,11 @@ class _GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: ClipRRect(
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: ClipRRect(
         borderRadius: BorderRadius.circular(24),
         child: AspectRatio(
           aspectRatio: 16 / 9,
@@ -188,6 +190,6 @@ class _GameCard extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }

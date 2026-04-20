@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/shared_sliver_app_bar.dart';
 import '../../../shared/widgets/shared_footer.dart';
+import '../../../shared/widgets/simple_rose_painter.dart';
 import 'models/episode_model.dart';
 import 'widgets/episode_card_with_rebecca.dart';
 
@@ -39,22 +39,65 @@ class _TrackerPageState extends State<TrackerPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: const Color(0xFF000000),
       body: Stack(
         children: [
-          // L0: Global Background
+          // BACKGROUND
           Positioned.fill(
             child: Container(
-              color: AppColors.background,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFF000000),
+                    Color(0xFF05080C),
+                  ],
+                ),
+              ),
             ),
           ),
-          Positioned.fill(
+
+          // REBECCA
+          Positioned(
+            right: 0,
+            top: 0,
+            bottom: 0,
+            width: screenWidth * 0.45,
             child: Image.asset(
-              'assets/images/backgrounds/noise_texture.png',
+              'assets/images/characters/rebecca_symbol_base.png',
               fit: BoxFit.cover,
-              opacity: const AlwaysStoppedAnimation(0.05),
-              errorBuilder: (context, error, stackTrace) => const SizedBox(),
+            ),
+          ),
+
+          // SOFT LEFT FADE (VERY IMPORTANT)
+          Positioned.fill(
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Colors.black,
+                    Colors.black,
+                    Colors.transparent,
+                  ],
+                  stops: [0.0, 0.6, 1.0],
+                ),
+              ),
+            ),
+          ),
+
+          // BLACK ROSE SYMBOL
+          Positioned(
+            right: screenWidth * 0.15, // roughly top-right quadrant above shoulder
+            top: 100,
+            child: CustomPaint(
+              painter: SimpleRosePainter(),
+              size: const Size(24, 24),
             ),
           ),
 
@@ -67,62 +110,33 @@ class _TrackerPageState extends State<TrackerPage> {
 
               // Hero Section
               SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 450,
-                  width: double.infinity,
-                  child: Stack(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 120, left: 24, right: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // L0: Hero Background Image
-                      Positioned.fill(
-                        child: Image.asset(
-                          'assets/images/backgrounds/fog_main.png',
-                          fit: BoxFit.cover,
+                      Text(
+                        "YOU'RE VISITING THE NEW VERSION OF THE",
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.bodySecondary.copyWith(
+                          color: const Color(0xFFD49A6A), // warm slightly orange/desaturated
+                          letterSpacing: 2,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
                         ),
                       ),
-                      // L1: Dark Overlay Gradient
-                      Positioned.fill(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [
-                                Colors.black.withAlpha(220),
-                                Colors.transparent,
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      // L2: Content (Centered column)
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "SYSTEM STATUS",
-                              textAlign: TextAlign.center,
-                              style: AppTextStyles.bodySecondary.copyWith(
-                                letterSpacing: 4,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.accent,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'TRACKER',
-                              textAlign: TextAlign.center,
-                              style: AppTextStyles.h1.copyWith(
-                                fontSize: MediaQuery.of(context).size.width * 0.12 > 72.0
-                                  ? 72.0
-                                  : (MediaQuery.of(context).size.width * 0.12 < 32.0 ? 32.0 : MediaQuery.of(context).size.width * 0.12),
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: -2,
-                                height: 1.1,
-                              ),
-                            ),
-                          ],
+                      const SizedBox(height: 16),
+                      Text(
+                        "EPISODE TRACKER",
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.h1.copyWith(
+                          fontSize: MediaQuery.of(context).size.width * 0.12 > 80.0
+                            ? 80.0
+                            : (MediaQuery.of(context).size.width * 0.12 < 40.0 ? 40.0 : MediaQuery.of(context).size.width * 0.12),
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: -2,
+                          color: Colors.white,
+                          height: 1.1,
                         ),
                       ),
                     ],
@@ -131,7 +145,7 @@ class _TrackerPageState extends State<TrackerPage> {
               ),
 
               // Spacer instead of explanation text
-              const SliverToBoxAdapter(child: SizedBox(height: 48)),
+              const SliverToBoxAdapter(child: SizedBox(height: 120)),
 
               // Items Section (Episode List)
               SliverPadding(
