@@ -39,8 +39,6 @@ class _TrackerPageState extends State<TrackerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: Colors.black, // Dark background
       body: Stack(
@@ -63,14 +61,17 @@ class _TrackerPageState extends State<TrackerPage> {
 
           // L1: Rebecca Image
           Positioned(
-            right: 0,
+            right: -40,
             top: 0,
             bottom: 0,
-            width: screenWidth * 0.45,
-            child: Image.asset(
-              'assets/images/characters/rebecca_symbol_base.png',
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => const SizedBox(),
+            child: Transform.scale(
+              scale: 1.15,
+              alignment: Alignment.centerRight,
+              child: Image.asset(
+                'assets/images/characters/rebecca_symbol_base.png',
+                fit: BoxFit.fitHeight,
+                errorBuilder: (context, error, stackTrace) => const SizedBox(),
+              ),
             ),
           ),
 
@@ -81,24 +82,6 @@ class _TrackerPageState extends State<TrackerPage> {
             child: CustomPaint(
               painter: BlackRosePainter(),
               size: const Size(24, 24),
-            ),
-          ),
-
-          // L3: Solid Black Left-to-Transparent Gradient Overlay
-          Positioned.fill(
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Colors.black,
-                    Colors.black,
-                    Colors.transparent,
-                  ],
-                  stops: [0.0, 0.6, 1.0],
-                ),
-              ),
             ),
           ),
 
