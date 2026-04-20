@@ -109,13 +109,15 @@ class HomeScreenNew extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
                 sliver: SliverList(
                   delegate: SliverChildListDelegate([
-                    _GameCard(
-                      title: 'DREADMOOR',
-                      imagePath:
-                          'assets/images/backgrounds/dreadmoor_forest.png',
+                    GestureDetector(
                       onTap: () {
                         context.go('/dreadmoor');
                       },
+                      child: const _GameCard(
+                        title: 'DREADMOOR',
+                        imagePath:
+                            'assets/images/backgrounds/dreadmoor_forest.png',
+                      ),
                     ),
                   ]),
                 ),
@@ -134,21 +136,17 @@ class HomeScreenNew extends StatelessWidget {
 class _GameCard extends StatelessWidget {
   final String title;
   final String imagePath;
-  final VoidCallback onTap;
 
   const _GameCard({
     required this.title,
     required this.imagePath,
-    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: ClipRRect(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: ClipRRect(
         borderRadius: BorderRadius.circular(24),
         child: AspectRatio(
           aspectRatio: 16 / 9,
@@ -178,18 +176,10 @@ class _GameCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned.fill(
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: onTap,
-                  ),
-                ),
-              ),
             ],
           ),
         ),
       ),
-    ));
+    );
   }
 }
