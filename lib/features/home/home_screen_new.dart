@@ -85,9 +85,16 @@ class HomeScreenNew extends StatelessWidget {
                               'BLACKMOON',
                               textAlign: TextAlign.center,
                               style: AppTextStyles.h1.copyWith(
-                                fontSize: MediaQuery.of(context).size.width * 0.12 > 72.0
-                                  ? 72.0
-                                  : (MediaQuery.of(context).size.width * 0.12 < 32.0 ? 32.0 : MediaQuery.of(context).size.width * 0.12),
+                                fontSize: MediaQuery.of(context).size.width *
+                                            0.12 >
+                                        72.0
+                                    ? 72.0
+                                    : (MediaQuery.of(context).size.width *
+                                                0.12 <
+                                            32.0
+                                        ? 32.0
+                                        : MediaQuery.of(context).size.width *
+                                            0.12),
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: -2,
                                 height: 1.1,
@@ -170,7 +177,9 @@ class _GameCard extends StatelessWidget {
                   style: AppTextStyles.h1.copyWith(
                     fontSize: MediaQuery.of(context).size.width * 0.08 > 48.0
                         ? 48.0
-                        : (MediaQuery.of(context).size.width * 0.08 < 24.0 ? 24.0 : MediaQuery.of(context).size.width * 0.08),
+                        : (MediaQuery.of(context).size.width * 0.08 < 24.0
+                            ? 24.0
+                            : MediaQuery.of(context).size.width * 0.08),
                     fontWeight: FontWeight.w900,
                     letterSpacing: 2,
                   ),

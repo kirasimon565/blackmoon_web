@@ -10,27 +10,34 @@ class BlackRosePainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     // Layer 1: Base Core
-    canvas.drawCircle(Offset(size.width * 0.45, size.height * 0.55), size.width * 0.15, paint);
+    canvas.drawCircle(Offset(size.width * 0.45, size.height * 0.55),
+        size.width * 0.15, paint);
 
     // Layer 2: Petal Blocks
     Path petal1 = Path()
       ..moveTo(size.width * 0.2, size.height * 0.5)
-      ..quadraticBezierTo(size.width * 0.1, size.height * 0.2, size.width * 0.4, size.height * 0.1)
-      ..quadraticBezierTo(size.width * 0.5, size.height * 0.3, size.width * 0.4, size.height * 0.5)
+      ..quadraticBezierTo(size.width * 0.1, size.height * 0.2, size.width * 0.4,
+          size.height * 0.1)
+      ..quadraticBezierTo(size.width * 0.5, size.height * 0.3, size.width * 0.4,
+          size.height * 0.5)
       ..close();
     canvas.drawPath(petal1, paint);
 
     Path petal2 = Path()
       ..moveTo(size.width * 0.8, size.height * 0.6)
-      ..quadraticBezierTo(size.width * 0.9, size.height * 0.9, size.width * 0.6, size.height * 0.9)
-      ..quadraticBezierTo(size.width * 0.5, size.height * 0.7, size.width * 0.6, size.height * 0.5)
+      ..quadraticBezierTo(size.width * 0.9, size.height * 0.9, size.width * 0.6,
+          size.height * 0.9)
+      ..quadraticBezierTo(size.width * 0.5, size.height * 0.7, size.width * 0.6,
+          size.height * 0.5)
       ..close();
     canvas.drawPath(petal2, paint);
 
     Path petal3 = Path()
       ..moveTo(size.width * 0.6, size.height * 0.2)
-      ..quadraticBezierTo(size.width * 0.9, size.height * 0.1, size.width * 0.8, size.height * 0.4)
-      ..quadraticBezierTo(size.width * 0.7, size.height * 0.4, size.width * 0.6, size.height * 0.3)
+      ..quadraticBezierTo(size.width * 0.9, size.height * 0.1, size.width * 0.8,
+          size.height * 0.4)
+      ..quadraticBezierTo(size.width * 0.7, size.height * 0.4, size.width * 0.6,
+          size.height * 0.3)
       ..close();
     canvas.drawPath(petal3, paint);
 

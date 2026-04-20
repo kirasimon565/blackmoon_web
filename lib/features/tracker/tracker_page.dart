@@ -112,7 +112,8 @@ class _TrackerPageState extends State<TrackerPage> {
               // Hero Section
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 120, left: 24, right: 24, bottom: 48),
+                  padding: const EdgeInsets.only(
+                      top: 120, left: 24, right: 24, bottom: 48),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -140,9 +141,12 @@ class _TrackerPageState extends State<TrackerPage> {
                         "EPISODE TRACKER",
                         textAlign: TextAlign.center,
                         style: AppTextStyles.h1.copyWith(
-                          fontSize: MediaQuery.of(context).size.width * 0.12 > 72.0
+                          fontSize: MediaQuery.of(context).size.width * 0.12 >
+                                  72.0
                               ? 72.0
-                              : (MediaQuery.of(context).size.width * 0.12 < 32.0 ? 32.0 : MediaQuery.of(context).size.width * 0.12),
+                              : (MediaQuery.of(context).size.width * 0.12 < 32.0
+                                  ? 32.0
+                                  : MediaQuery.of(context).size.width * 0.12),
                           fontWeight: FontWeight.w900, // Very heavy weight
                           letterSpacing: -2, // Tight tracking
                           color: Colors.white, // Pure white

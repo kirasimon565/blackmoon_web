@@ -84,9 +84,16 @@ class ContactPage extends StatelessWidget {
                               'CONTACT',
                               textAlign: TextAlign.center,
                               style: AppTextStyles.h1.copyWith(
-                                fontSize: MediaQuery.of(context).size.width * 0.12 > 72.0
-                                  ? 72.0
-                                  : (MediaQuery.of(context).size.width * 0.12 < 32.0 ? 32.0 : MediaQuery.of(context).size.width * 0.12),
+                                fontSize: MediaQuery.of(context).size.width *
+                                            0.12 >
+                                        72.0
+                                    ? 72.0
+                                    : (MediaQuery.of(context).size.width *
+                                                0.12 <
+                                            32.0
+                                        ? 32.0
+                                        : MediaQuery.of(context).size.width *
+                                            0.12),
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: -2,
                                 height: 1.1,
