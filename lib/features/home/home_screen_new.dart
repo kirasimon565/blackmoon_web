@@ -86,15 +86,15 @@ class HomeScreenNew extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: AppTextStyles.h1.copyWith(
                                 fontSize: MediaQuery.of(context).size.width *
-                                            0.12 >
-                                        72.0
-                                    ? 72.0
+                                            0.18 >
+                                        140.0
+                                    ? 140.0
                                     : (MediaQuery.of(context).size.width *
-                                                0.12 <
-                                            32.0
-                                        ? 32.0
+                                                0.18 <
+                                            48.0
+                                        ? 48.0
                                         : MediaQuery.of(context).size.width *
-                                            0.12),
+                                            0.18),
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: -2,
                                 height: 1.1,

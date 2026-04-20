@@ -25,7 +25,7 @@ class SharedSliverAppBar extends StatelessWidget {
                 onTap: () => context.go('/'),
                 child: Image.asset(
                   'assets/images/studio/blackmoon_logo.png',
-                  width: 160, // larger
+                  width: 200, // larger
                   fit: BoxFit.contain,
                   color: Colors.white,
                 ),
