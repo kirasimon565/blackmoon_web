@@ -117,7 +117,7 @@ class ContactPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'contact@blackmoonstudio.com',
+                        'contact information will be available Soon',
                         style: AppTextStyles.body.copyWith(
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
