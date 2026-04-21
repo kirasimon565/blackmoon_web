@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_colors.dart';
 
 class ProgressBar extends StatelessWidget {
   final String label;
@@ -15,46 +14,37 @@ class ProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label.toUpperCase(),
-          style: const TextStyle(
-            color: AppColors.textPrimary,
-            fontWeight: FontWeight.w800,
-            fontSize: 12, // Reduced
-            letterSpacing: 1.5,
-            fontFamily: 'Inter',
-          ),
+      children:,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 10), // مسافة بين النص والشريط
+        
+        // الشريط النحيف جداً (الستايل الرسمي لـ Moonvale)
         SizedBox(
-          height: 38, // Full bar height
+          height: 2, // نحيف جداً ليعطي مظهراً عصرياً
           child: Stack(
             children: [
-              // Background bar
+              // خلفية الشريط (المسار)
               Container(
                 width: double.infinity,
-                color: const Color(0xFF111418), // dark track background
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
-              // Progress fill
+              // الجزء الملون (التقدم) مع تأثير التوهج (Glow)
               FractionallySizedBox(
                 widthFactor: percentage / 100.0,
                 child: Container(
-                  color: const Color(0xFF5C8FAF), // Richer accent color fill
-                ),
-              ),
-              // Percentage text aligned right inside the bar
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 12.0),
-                  child: Text(
-                    '$percentage%',
-                    style: const TextStyle(
-                      color: Color(0xFFD0D4D8), // Slightly dimmed white
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF50B5D8), // لون أزرق Moonvale
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF50B5D8).withOpacity(0.5),
+                        blurRadius: 10, // تأثير الوهج
+                        spreadRadius: 1,
+                      ),
+                    ],
                   ),
                 ),
               ),
