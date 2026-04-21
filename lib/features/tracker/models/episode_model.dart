@@ -20,15 +20,20 @@ class EpisodeModel {
   });
 
   factory EpisodeModel.fromJson(Map<String, dynamic> json) {
+    // Safely cast the nested maps, defaulting to empty maps if null
     final progress = json['progress'] as Map<String, dynamic>? ?? {};
     final features = json['features'] as Map<String, dynamic>? ?? {};
 
     return EpisodeModel(
-      title: json['title'] ?? '',
-      released: json['released'] ?? false,
-      storyProgress: progress['story'] ?? 0,
-      programmingProgress: progress['programming'] ?? 0,
-      artProgress: progress['art'] ?? 0,
+      title: json['title'] as String? ?? 'Unknown Episode',
+      released: json['released'] as bool? ?? false,
+      
+      // Using `num?` before `.toInt()` prevents Flutter Web casting crashes
+      storyProgress: (progress['story'] as num?)?.toInt() ?? 0,
+      programmingProgress: (progress['programming'] as num?)?.toInt() ?? 0,
+      artProgress: (progress['art'] as num?)?.toInt() ?? 0,
+      
+      // Safely map dynamic lists to strict String lists
       completedFeatures: List<String>.from(features['completed'] ?? []),
       inProgressFeatures: List<String>.from(features['in_progress'] ?? []),
       plannedFeatures: List<String>.from(features['planned'] ?? []),
