@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../models/episode_model.dart';
-import 'progress_bar.dart';
 
 class EpisodeCardWithRebecca extends StatelessWidget {
   final EpisodeModel episode;
@@ -16,10 +15,9 @@ class EpisodeCardWithRebecca extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Padding(
-      // زيادة المسافة السفلية ليعطي شعوراً بالاتساع (Minimalism)
-      padding: const EdgeInsets.only(bottom: 80, left: 8, right: 8), 
+      padding: const EdgeInsets.only(bottom: 80, left: 24, right: 24), 
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 500), // عرض أقل ليكون أكثر أناقة
+        constraints: const BoxConstraints(maxWidth: 500), 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children:,
@@ -28,38 +26,37 @@ class EpisodeCardWithRebecca extends StatelessWidget {
     );
   }
 
-  // دالة مخصصة لبناء الأشرطة بستايل Moonvale النحيف
+  // دالة بناء الأشرطة النحيفة والفسفورية (المصححة)
   Widget _buildEverbyteTrack(String label, int percentage) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children:,
         ),
         const SizedBox(height: 10),
-        // شريط التقدم النحيف جداً
         Stack(
           children: [
-            // الخلفية (المسار الباهت)
+            // خلفية الشريط الباهتة
             Container(
-              height: 2, // نحيف جداً مثل الخيط
+              height: 2, 
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
-            // الجزء الملون (التقدم الحقيقي)
+            // الجزء الملون (التقدم) مع تأثير التوهج
             AnimatedContainer(
               duration: const Duration(milliseconds: 800),
               height: 2,
-              width: (percentage / 100) * 500, // يتناسب مع العرض الأقصى
+              width: (percentage / 100) * 450, // تم ضبط الحساب ليتناسب مع الحاوية
               decoration: BoxDecoration(
-                color: const Color(0xFF50B5D8), // لون أزرق Moonvale الشهير
+                color: const Color(0xFF50B5D8), 
                 borderRadius: BorderRadius.circular(2),
                 boxShadow: [
                   BoxShadow(
                     color: const Color(0xFF50B5D8).withOpacity(0.4),
                     blurRadius: 6,
-                    spreadRadius: 1, // تأثير وهج بسيط (Glow)
+                    spreadRadius: 1, 
                   ),
                 ],
               ),
