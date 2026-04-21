@@ -117,7 +117,7 @@ class ContactPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'The Contact Information Will Be Available Soon',
+                        'The Contact Info Will Be Available Soon',
                         style: AppTextStyles.body.copyWith(
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
