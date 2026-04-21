@@ -16,41 +16,40 @@ class HomeScreenNew extends StatelessWidget {
         children: [
           // L0: Global Background
           Positioned.fill(
-            child: Container(
-              color: AppColors.background,
-            ),
+            child: Container(color: AppColors.background),
           ),
           Positioned.fill(
             child: Image.asset(
               'assets/images/backgrounds/noise_texture.png',
               fit: BoxFit.cover,
               opacity: const AlwaysStoppedAnimation(0.05),
-              errorBuilder: (context, error, stackTrace) => const SizedBox(),
+              errorBuilder: (context, error, stackTrace) =>
+                  const SizedBox(),
             ),
           ),
 
-          // L1: CustomScrollView
+          // L1: Scroll
           CustomScrollView(
             physics: const BouncingScrollPhysics(),
             slivers: [
-              // SliverAppBar (Notch lives here)
               const SharedSliverAppBar(),
 
-              // Hero Section
+              // HERO
               SliverToBoxAdapter(
                 child: SizedBox(
                   height: 450,
                   width: double.infinity,
                   child: Stack(
                     children: [
-                      // L0: Hero Background Image
+                      // Background
                       Positioned.fill(
                         child: Image.asset(
                           'assets/images/backgrounds/fog_main.png',
                           fit: BoxFit.cover,
                         ),
                       ),
-                      // L1: Dark Overlay Gradient
+
+                      // Stronger gradient
                       Positioned.fill(
                         child: Container(
                           decoration: BoxDecoration(
@@ -58,49 +57,61 @@ class HomeScreenNew extends StatelessWidget {
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
                               colors: [
-                                Colors.black.withAlpha(220),
-                                Colors.transparent,
+                                Colors.black.withAlpha(240),
+                                Colors.black.withAlpha(0),
                               ],
                             ),
                           ),
                         ),
                       ),
-                      // L2: Content (Centered column)
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "STUDIO",
-                              textAlign: TextAlign.center,
-                              style: AppTextStyles.bodySecondary.copyWith(
-                                letterSpacing: 4,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.textSecondary,
+
+                      // CONTENT (LEFT ALIGNED — cinematic)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "STUDIO",
+                                style: AppTextStyles.bodySecondary.copyWith(
+                                  letterSpacing: 4,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.textSecondary,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'BLACKMOON',
-                              textAlign: TextAlign.center,
-                              style: AppTextStyles.h1.copyWith(
-                                fontSize: MediaQuery.of(context).size.width *
-                                            0.18 >
-                                        140.0
-                                    ? 140.0
-                                    : (MediaQuery.of(context).size.width *
-                                                0.18 <
-                                            48.0
-                                        ? 48.0
-                                        : MediaQuery.of(context).size.width *
-                                            0.18),
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: -2,
-                                height: 1.1,
+
+                              const SizedBox(height: 8),
+
+                              // FIXED TITLE
+                              LayoutBuilder(
+                                builder: (context, constraints) {
+                                  final width = constraints.maxWidth;
+
+                                  double fontSize = width * 0.14;
+
+                                  if (fontSize > 110) fontSize = 110;
+                                  if (fontSize < 42) fontSize = 42;
+
+                                  return Text(
+                                    'BLACKMOON',
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    overflow: TextOverflow.visible,
+                                    style: AppTextStyles.h1.copyWith(
+                                      fontSize: fontSize,
+                                      fontWeight: FontWeight.w900,
+                                      letterSpacing: -2,
+                                      height: 1.0,
+                                    ),
+                                  );
+                                },
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -110,10 +121,10 @@ class HomeScreenNew extends StatelessWidget {
 
               const SliverToBoxAdapter(child: SizedBox(height: 48)),
 
-              // Portfolio Items (Games)
+              // GAME CARD
               SliverPadding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 24, vertical: 10),
                 sliver: SliverList(
                   delegate: SliverChildListDelegate([
                     _GameCard(
@@ -128,7 +139,6 @@ class HomeScreenNew extends StatelessWidget {
                 ),
               ),
 
-              // Footer
               const SharedFooter(),
             ],
           ),
@@ -151,6 +161,12 @@ class _GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
+    double fontSize = width * 0.08;
+    if (fontSize > 48) fontSize = 48;
+    if (fontSize < 24) fontSize = 24;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: ClipRRect(
@@ -167,19 +183,14 @@ class _GameCard extends StatelessWidget {
               ),
               Positioned.fill(
                 child: Container(
-                  color: Colors.black.withAlpha(50), // Very light black overlay
+                  color: Colors.black.withAlpha(50),
                 ),
               ),
               Center(
                 child: Text(
                   title,
-                  textAlign: TextAlign.center,
                   style: AppTextStyles.h1.copyWith(
-                    fontSize: MediaQuery.of(context).size.width * 0.08 > 48.0
-                        ? 48.0
-                        : (MediaQuery.of(context).size.width * 0.08 < 24.0
-                            ? 24.0
-                            : MediaQuery.of(context).size.width * 0.08),
+                    fontSize: fontSize,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 2,
                   ),
@@ -188,9 +199,7 @@ class _GameCard extends StatelessWidget {
               Positioned.fill(
                 child: Material(
                   color: Colors.transparent,
-                  child: InkWell(
-                    onTap: onTap,
-                  ),
+                  child: InkWell(onTap: onTap),
                 ),
               ),
             ],
