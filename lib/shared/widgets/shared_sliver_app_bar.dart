@@ -13,21 +13,22 @@ class SharedSliverAppBar extends StatelessWidget {
       pinned: false,
       backgroundColor: Colors.transparent,
       elevation: 0,
-      toolbarHeight: 72, // gives breathing space
+      toolbarHeight: 72, // balanced height
       flexibleSpace: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: SafeArea(
           bottom: false,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               GestureDetector(
                 onTap: () => context.go('/'),
-                child: Opacity(
-                  opacity: 0.95, // subtle premium feel
+                child: Transform.translate(
+                  offset: const Offset(0, 4), // 🔥 fixes "too high" feeling
                   child: Image.asset(
                     'assets/images/studio/blackmoon_logo.png',
-                    height: 48, // 🔥 controlled size (not width)
+                    height: 58, // 🔥 correct visual size
                     fit: BoxFit.contain,
                     color: Colors.white,
                   ),
