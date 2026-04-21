@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../models/episode_model.dart';
 
+const Color _accentPink = Color(0xFFFF4D79);
+
 class EpisodeCardWithRebecca extends StatelessWidget {
   final EpisodeModel episode;
 
@@ -15,66 +17,72 @@ class EpisodeCardWithRebecca extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // If you want to show the Episode Title above the bars:
         Text(
-          episode.title,
+          episode.title.toUpperCase(),
           style: AppTextStyles.h1.copyWith(
             fontSize: 28,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w900,
             color: Colors.white,
-            letterSpacing: -0.5,
+            letterSpacing: 1.5,
           ),
         ),
-        const SizedBox(height: 24),
-        _buildEverbyteTrack('Story', episode.storyProgress),
-        const SizedBox(height: 16),
-        _buildEverbyteTrack('Programming', episode.programmingProgress),
-        const SizedBox(height: 16),
-        _buildEverbyteTrack('Art & Media', episode.artProgress),
+        const SizedBox(height: 32),
+        
+        _buildEverbyteTrack('STORY', episode.storyProgress),
+        const SizedBox(height: 32),
+        
+        _buildEverbyteTrack('PROGRAMMING', episode.programmingProgress),
+        const SizedBox(height: 32),
+        
+        // Kept as "ART & MEDIA" to maintain BlackMoon's unique identity
+        _buildEverbyteTrack('ART & MEDIA', episode.artProgress),
+        
+        const SizedBox(height: 64), // Spacing at the bottom of the card
       ],
     );
   }
 
   Widget _buildEverbyteTrack(String label, int percentage) {
+    // Convert your integer percentage (0-100) to a fraction (0.0-1.0) for FractionallySizedBox
+    final double factor = (percentage / 100).clamp(0.0, 1.0);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: AppTextStyles.bodyMedium.copyWith(color: Colors.white),
+          style: AppTextStyles.body.copyWith(
+            color: _accentPink,
+            fontSize: 20,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 4.0,
+          ),
         ),
-        const SizedBox(height: 10),
-        LayoutBuilder(
-          builder: (context, constraints) {
-            return Stack(
-              children: [
-                Container(
-                  height: 2,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withAlpha(26), // ~0.1 opacity
-                    borderRadius: BorderRadius.circular(2),
-                  ),
+        const SizedBox(height: 8),
+        Container(
+          height: 48,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white.withAlpha(15), // Dim grey background track
+          ),
+          child: FractionallySizedBox(
+            alignment: Alignment.centerLeft,
+            widthFactor: factor,
+            child: Container(
+              color: _accentPink, // The filled part
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                '$percentage%',
+                style: AppTextStyles.h1.copyWith(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w900,
                 ),
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 800),
-                  height: 2,
-                  width: constraints.maxWidth * (percentage / 100),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF50B5D8),
-                    borderRadius: BorderRadius.circular(2),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF50B5D8)
-                            .withAlpha(102), // ~0.4 opacity
-                        blurRadius: 6,
-                        spreadRadius: 1,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          },
+              ),
+            ),
+          ),
         ),
       ],
     );
