@@ -28,7 +28,7 @@ class SharedSliverAppBar extends StatelessWidget {
                 onTap: () => context.go('/'),
                 child: Image.asset(
                   'assets/images/studio/blackmoon_logo.png',
-                  height: 60, 
+                  height: 50, 
                   fit: BoxFit.contain,
                   errorBuilder: (context, error, stackTrace) => const Text(
                     "BLACKMOON",
@@ -47,7 +47,7 @@ class SharedSliverAppBar extends StatelessWidget {
                 icon: const Icon(
                   Icons.menu_rounded, 
                   color: AppColors.accent, 
-                  size: 38, 
+                  size: 25, 
                 ),
                 onPressed: () {
                   MainScaffold.of(context)?.toggleMenu();
