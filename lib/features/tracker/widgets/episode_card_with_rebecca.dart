@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../models/episode_model.dart';
 
-// Changed from Everbyte Pink to a deep Dreadmoor Crimson Red
+// Deep Dreadmoor Crimson Red
 const Color _accentColor = Color(0xFFD32F2F); 
 
 class EpisodeCardWithRebecca extends StatelessWidget {
@@ -18,7 +18,7 @@ class EpisodeCardWithRebecca extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // If you want to show the Episode Title above the bars:
+        // Episode Title
         Text(
           episode.title.toUpperCase(),
           style: AppTextStyles.h1.copyWith(
@@ -43,46 +43,58 @@ class EpisodeCardWithRebecca extends StatelessWidget {
     );
   }
 
+  // Sharp, glowing terminal-style tracker to replace the chunky Everbyte look
   Widget _buildBlackMoonTrack(String label, int percentage) {
-    // Convert your integer percentage (0-100) to a fraction (0.0-1.0) for FractionallySizedBox
     final double factor = (percentage / 100).clamp(0.0, 1.0);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: AppTextStyles.body.copyWith(
-            color: _accentColor, // Updated to Crimson
-            fontSize: 20,
-            fontWeight: FontWeight.w900,
-            letterSpacing: 4.0,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.body.copyWith(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 2.0,
+              ),
+            ),
+            Text(
+              '$percentage%',
+              style: AppTextStyles.body.copyWith(
+                color: _accentColor,
+                fontSize: 18,
+                fontWeight: FontWeight.w900,
+                fontFamily: 'monospace', 
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 8),
         Container(
-          height: 48,
+          height: 4, // Sharp, thin track instead of a chunky block
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.white.withAlpha(15), // Dim grey background track
+            color: Colors.white.withAlpha(20), // Dim background track
+            borderRadius: BorderRadius.zero, // Sharp edges
           ),
           child: FractionallySizedBox(
             alignment: Alignment.centerLeft,
             widthFactor: factor,
             child: Container(
-              color: _accentColor, // Updated to Crimson
-              alignment: Alignment.centerRight,
-              // Reduced padding so the text has more room in small bars
-              padding: const EdgeInsets.symmetric(horizontal: 8), 
-              child: Text(
-                '$percentage%',
-                maxLines: 1, // Forces the text to stay on a single line
-                softWrap: false, // Prevents the % from dropping down
-                style: AppTextStyles.h1.copyWith(
-                  color: Colors.white,
-                  fontSize: 18, // Reduced from 24 to fit better
-                  fontWeight: FontWeight.w900,
-                ),
+              decoration: BoxDecoration(
+                color: _accentColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: _accentColor.withAlpha(100),
+                    blurRadius: 8, // Cinematic neon glow
+                    spreadRadius: 1,
+                  ),
+                ],
               ),
             ),
           ),
