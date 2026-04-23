@@ -2,14 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../shared/widgets/shared_sliver_app_bar.dart';
 import '../../../shared/widgets/shared_footer.dart';
 import 'models/episode_model.dart';
-
-// You can define this in your AppColors, but setting it here for the Everbyte vibe
-const Color _everbyteBg = Color(0xFF12151E); 
-const Color _accentPink = Color(0xFFFF4D79);
-const Color _accentOrange = Color(0xFFF2A679);
+import 'widgets/episode_card_with_rebecca.dart'; 
 
 class TrackerPage extends StatefulWidget {
   const TrackerPage({super.key});
@@ -24,12 +21,10 @@ class _TrackerPageState extends State<TrackerPage> {
   @override
   void initState() {
     super.initState();
-    // Assuming this fetches your episode data
     _episodesFuture = fetchTracker(); 
   }
 
   Future<List<EpisodeModel>> fetchTracker() async {
-    // Your existing fetch logic here...
     final response = await http.get(Uri.parse(
         'https://solitary-glitter-c0f6.natalieparker1444.workers.dev/tracker'));
 
@@ -45,20 +40,17 @@ class _TrackerPageState extends State<TrackerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _everbyteBg,
+      backgroundColor: AppColors.backgroundSecondary,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
           const SharedSliverAppBar(),
-
-          // 1. Hero Image (Rebecca Fading)
           SliverToBoxAdapter(
             child: SizedBox(
               height: 400,
               width: double.infinity,
               child: Stack(
                 children: [
-                  // Image of Rebecca
                   Positioned(
                     right: 0,
                     top: 0,
@@ -82,15 +74,13 @@ class _TrackerPageState extends State<TrackerPage> {
                       ),
                     ),
                   ),
-                  
-                  // Black Rose Symbol / Custom branding in top right
                   Positioned(
                     top: 40,
                     right: 40,
                     child: Image.asset(
-                      'assets/images/branding/black_rose.png', // Replace with your asset
+                      'assets/images/branding/black_rose.png',
                       width: 40,
-                      color: _accentPink,
+                      color: AppColors.accent,
                       errorBuilder: (context, error, stackTrace) => const SizedBox(),
                     ),
                   ),
@@ -98,8 +88,6 @@ class _TrackerPageState extends State<TrackerPage> {
               ),
             ),
           ),
-
-          // 2. Text Intro Section (Updated for BlackMoon / Dreadmoor)
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -107,9 +95,9 @@ class _TrackerPageState extends State<TrackerPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "OFFICIAL DEVELOPMENT STATUS FOR DREADMOOR", 
+                    "OFFICIAL DEVELOPMENT STATUS FOR", 
                     style: AppTextStyles.bodySecondary.copyWith(
-                      color: _accentOrange,
+                      color: AppColors.accentSecondary,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 1.5,
                       fontSize: 12,
@@ -121,14 +109,9 @@ class _TrackerPageState extends State<TrackerPage> {
                     style: AppTextStyles.h1.copyWith(
                       color: Colors.white,
                       fontSize: 48,
-                      fontWeight: FontWeight.w900,
-                      height: 1.1,
-                      letterSpacing: -1,
                     ),
                   ),
                   const SizedBox(height: 24),
-                  
-                  // Rich text with BlackMoon/Dreadmoor lore
                   RichText(
                     text: TextSpan(
                       style: AppTextStyles.body.copyWith(
@@ -145,79 +128,80 @@ class _TrackerPageState extends State<TrackerPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 32),
-                  Text(
-                    "Episode 1 is currently in development.", // Updated status
-                    style: AppTextStyles.body.copyWith(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
                   const SizedBox(height: 48),
                 ],
               ),
             ),
           ),
 
-          // 3. Progress Bars Section
-          // In reality, map this to your _episodesFuture data. 
+          // THE REAL DYNAMIC DATA Restored
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            sliver: SliverList(
-              delegate: SliverChildListDelegate([
-                const TrackerProgressBar(title: "STORY", percentage: 1.0),
-                const SizedBox(height: 32),
-                const TrackerProgressBar(title: "PROGRAMMING", percentage: 1.0),
-                const SizedBox(height: 32),
-                const TrackerProgressBar(title: "GRAPHICS & MEDIA", percentage: 1.0),
-                const SizedBox(height: 48),
-                
-                // Upcoming Features Button
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [_accentPink, Color(0xFFC7365F)],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        "Upcoming Features",
-                        style: AppTextStyles.body.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
+            sliver: FutureBuilder<List<EpisodeModel>>(
+              future: _episodesFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return SliverToBoxAdapter(
+                    child: Center(child: CircularProgressIndicator(color: AppColors.accent)),
+                  );
+                } else if (snapshot.hasError) {
+                  return SliverToBoxAdapter(
+                    child: Text('ERR_LOAD_DATA: ${snapshot.error}', style: AppTextStyles.body.copyWith(color: Colors.red, fontFamily: 'monospace')),
+                  );
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return SliverToBoxAdapter(
+                    child: Text('NO_DATA_FOUND', style: AppTextStyles.body.copyWith(fontFamily: 'monospace')),
+                  );
+                }
+
+                final episodes = snapshot.data!;
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      // Note: Ensure EpisodeCardWithRebecca uses the new sharp TrackerProgressBar!
+                      return EpisodeCardWithRebecca(episode: episodes[index]); 
+                    },
+                    childCount: episodes.length,
                   ),
-                ),
-                const SizedBox(height: 64),
-              ]),
+                );
+              },
             ),
           ),
-
+          
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 64.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [AppColors.accent, const Color(0xFFC7365F)],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                    borderRadius: BorderRadius.circular(4), // Sharp corners on button too
+                  ),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                    ),
+                    onPressed: () {},
+                    child: Text("Upcoming Features", style: AppTextStyles.body.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+              ),
+            ),
+          ),
           const SharedFooter(),
         ],
       ),
     );
   }
 
-  // Helper widget to create the pink highlight pills in the text
   InlineSpan _buildHighlightTag(String text) {
     return WidgetSpan(
       alignment: PlaceholderAlignment.middle,
@@ -225,24 +209,17 @@ class _TrackerPageState extends State<TrackerPage> {
         margin: const EdgeInsets.symmetric(horizontal: 2),
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
         decoration: BoxDecoration(
-          color: _accentPink,
-          borderRadius: BorderRadius.circular(6),
+          color: AppColors.accent,
+          borderRadius: BorderRadius.circular(4), // Sharper tag borders
         ),
-        child: Text(
-          text,
-          style: AppTextStyles.body.copyWith(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        child: Text(text, style: AppTextStyles.body.copyWith(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
       ),
     );
   }
 }
 
 // ==========================================
-// CUSTOM PROGRESS BAR WIDGET
+// SHARP, GLOWING PROGRESS BAR (BlackMoon Style)
 // ==========================================
 class TrackerProgressBar extends StatelessWidget {
   final String title;
@@ -259,36 +236,51 @@ class TrackerProgressBar extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: AppTextStyles.body.copyWith(
-            color: _accentPink,
-            fontSize: 20,
-            fontWeight: FontWeight.w900,
-            letterSpacing: 4.0,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              title,
+              style: AppTextStyles.body.copyWith(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 2.0,
+              ),
+            ),
+            Text(
+              '${(percentage * 100).toInt()}%',
+              style: AppTextStyles.body.copyWith(
+                color: AppColors.accent, 
+                fontSize: 18,
+                fontWeight: FontWeight.w900,
+                fontFamily: 'monospace', 
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 8),
         Container(
-          height: 48,
+          height: 4, // Sharp, thin track instead of chunky block
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.white.withAlpha(15), // Dim grey track
+            color: Colors.white.withAlpha(20), 
+            borderRadius: BorderRadius.zero, // Sharp edges
           ),
           child: FractionallySizedBox(
             alignment: Alignment.centerLeft,
             widthFactor: percentage,
             child: Container(
-              color: _accentPink, // The filled part
-              alignment: Alignment.centerRight,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                '${(percentage * 100).toInt()}%',
-                style: AppTextStyles.h1.copyWith(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w900,
-                ),
+              decoration: BoxDecoration(
+                color: AppColors.accent,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.accent.withAlpha(100),
+                    blurRadius: 8, // Cinematic neon glow
+                    spreadRadius: 1,
+                  ),
+                ],
               ),
             ),
           ),
