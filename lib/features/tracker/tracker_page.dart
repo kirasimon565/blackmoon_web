@@ -95,37 +95,43 @@ class _TrackerPageState extends State<TrackerPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "OFFICIAL DEVELOPMENT STATUS FOR", 
+                    "SYSTEM LOG // METRICS", 
                     style: AppTextStyles.bodySecondary.copyWith(
                       color: AppColors.accentSecondary,
                       fontWeight: FontWeight.w800,
-                      letterSpacing: 1.5,
+                      letterSpacing: 2.0,
                       fontSize: 12,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "EPISODE\nTRACKER",
+                    "DEVELOPMENT\nTRACKER",
                     style: AppTextStyles.h1.copyWith(
                       color: Colors.white,
                       fontSize: 48,
                     ),
                   ),
                   const SizedBox(height: 24),
-                  RichText(
-                    text: TextSpan(
-                      style: AppTextStyles.body.copyWith(
-                        color: Colors.white70,
-                        fontSize: 16,
-                        height: 1.6,
-                      ),
-                      children: [
-                        const TextSpan(text: "Welcome to the shadows of Dreadmoor. If you are looking for the latest "),
-                        _buildHighlightTag("development progress"),
-                        const TextSpan(text: " on the search for Rebecca Stone, or want to know what "),
-                        _buildHighlightTag("interactive features"),
-                        const TextSpan(text: " the BlackMoon team is building into the engine, you are in the right place. Nothing's as it seems. Keep an eye on the meters below to see what is currently in production."),
-                      ],
+                  
+                  // Replaced the Everbyte Pill-Text with a cinematic dossier log
+                  Text(
+                    "Live production readouts for Project Dreadmoor.\n\nMonitor the active development of our narrative architecture, interactive modules, and the ongoing search for Rebecca Stone. The metrics below reflect real-time engine status.",
+                    style: AppTextStyles.body.copyWith(
+                      color: Colors.white70,
+                      fontSize: 16,
+                      height: 1.6,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  
+                  // Standalone Tagline
+                  Text(
+                    "Nothing's as it seems.",
+                    style: AppTextStyles.body.copyWith(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
                     ),
                   ),
                   const SizedBox(height: 48),
@@ -134,7 +140,7 @@ class _TrackerPageState extends State<TrackerPage> {
             ),
           ),
 
-          // THE REAL DYNAMIC DATA Restored
+          // THE REAL DYNAMIC DATA
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             sliver: FutureBuilder<List<EpisodeModel>>(
@@ -158,7 +164,6 @@ class _TrackerPageState extends State<TrackerPage> {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                      // Note: Ensure EpisodeCardWithRebecca uses the new sharp TrackerProgressBar!
                       return EpisodeCardWithRebecca(episode: episodes[index]); 
                     },
                     childCount: episodes.length,
@@ -176,11 +181,11 @@ class _TrackerPageState extends State<TrackerPage> {
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [AppColors.accent, const Color(0xFFC7365F)],
+                      colors: [AppColors.accent, const Color(0xFF8B0000)], // Darker crimson gradient transition
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
-                    borderRadius: BorderRadius.circular(4), // Sharp corners on button too
+                    borderRadius: BorderRadius.circular(4), // Sharp corners
                   ),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -190,7 +195,7 @@ class _TrackerPageState extends State<TrackerPage> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                     ),
                     onPressed: () {},
-                    child: Text("Upcoming Features", style: AppTextStyles.body.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+                    child: Text("Upcoming Features", style: AppTextStyles.body.copyWith(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 1.0)),
                   ),
                 ),
               ),
@@ -198,21 +203,6 @@ class _TrackerPageState extends State<TrackerPage> {
           ),
           const SharedFooter(),
         ],
-      ),
-    );
-  }
-
-  InlineSpan _buildHighlightTag(String text) {
-    return WidgetSpan(
-      alignment: PlaceholderAlignment.middle,
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 2),
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-        decoration: BoxDecoration(
-          color: AppColors.accent,
-          borderRadius: BorderRadius.circular(4), // Sharper tag borders
-        ),
-        child: Text(text, style: AppTextStyles.body.copyWith(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
       ),
     );
   }
