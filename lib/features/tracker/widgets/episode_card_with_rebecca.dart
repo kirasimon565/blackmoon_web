@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../models/episode_model.dart';
 
-const Color _accentPink = Color(0xFFFF4D79);
+// Changed from Everbyte Pink to a deep Dreadmoor Crimson Red
+const Color _accentColor = Color(0xFFD32F2F); 
 
 class EpisodeCardWithRebecca extends StatelessWidget {
   final EpisodeModel episode;
@@ -29,21 +30,20 @@ class EpisodeCardWithRebecca extends StatelessWidget {
         ),
         const SizedBox(height: 32),
         
-        _buildEverbyteTrack('STORY', episode.storyProgress),
+        _buildBlackMoonTrack('STORY', episode.storyProgress),
         const SizedBox(height: 32),
         
-        _buildEverbyteTrack('PROGRAMMING', episode.programmingProgress),
+        _buildBlackMoonTrack('PROGRAMMING', episode.programmingProgress),
         const SizedBox(height: 32),
         
-        // Kept as "ART & MEDIA" to maintain BlackMoon's unique identity
-        _buildEverbyteTrack('ART & MEDIA', episode.artProgress),
+        _buildBlackMoonTrack('ART & MEDIA', episode.artProgress),
         
         const SizedBox(height: 64), // Spacing at the bottom of the card
       ],
     );
   }
 
-  Widget _buildEverbyteTrack(String label, int percentage) {
+  Widget _buildBlackMoonTrack(String label, int percentage) {
     // Convert your integer percentage (0-100) to a fraction (0.0-1.0) for FractionallySizedBox
     final double factor = (percentage / 100).clamp(0.0, 1.0);
 
@@ -53,7 +53,7 @@ class EpisodeCardWithRebecca extends StatelessWidget {
         Text(
           label,
           style: AppTextStyles.body.copyWith(
-            color: _accentPink,
+            color: _accentColor, // Updated to Crimson
             fontSize: 20,
             fontWeight: FontWeight.w900,
             letterSpacing: 4.0,
@@ -70,14 +70,17 @@ class EpisodeCardWithRebecca extends StatelessWidget {
             alignment: Alignment.centerLeft,
             widthFactor: factor,
             child: Container(
-              color: _accentPink, // The filled part
+              color: _accentColor, // Updated to Crimson
               alignment: Alignment.centerRight,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              // Reduced padding so the text has more room in small bars
+              padding: const EdgeInsets.symmetric(horizontal: 8), 
               child: Text(
                 '$percentage%',
+                maxLines: 1, // Forces the text to stay on a single line
+                softWrap: false, // Prevents the % from dropping down
                 style: AppTextStyles.h1.copyWith(
                   color: Colors.white,
-                  fontSize: 24,
+                  fontSize: 18, // Reduced from 24 to fit better
                   fontWeight: FontWeight.w900,
                 ),
               ),
