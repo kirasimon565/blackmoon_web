@@ -108,12 +108,12 @@ class _TrackerPageState extends State<TrackerPage> {
                     "DEVELOPMENT\nTRACKER",
                     style: AppTextStyles.h1.copyWith(
                       color: Colors.white,
-                      fontSize: 48,
+                      fontSize: 36, // Reduced from 48 so "DEVELOPMENT" doesn't break
                     ),
                   ),
                   const SizedBox(height: 24),
                   
-                  // Replaced the Everbyte Pill-Text with a cinematic dossier log
+                  // Cinematic dossier log
                   Text(
                     "Live production readouts for Project Dreadmoor.\n\nMonitor the active development of our narrative architecture, interactive modules, and the ongoing search for Rebecca Stone. The metrics below reflect real-time engine status.",
                     style: AppTextStyles.body.copyWith(
@@ -173,6 +173,7 @@ class _TrackerPageState extends State<TrackerPage> {
             ),
           ),
           
+          // Sharp, minimal terminal button instead of Everbyte gradient block
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 64.0),
@@ -180,22 +181,46 @@ class _TrackerPageState extends State<TrackerPage> {
                 alignment: Alignment.centerLeft,
                 child: Container(
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [AppColors.accent, const Color(0xFF8B0000)], // Darker crimson gradient transition
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    borderRadius: BorderRadius.circular(4), // Sharp corners
+                    color: Colors.transparent,
+                    border: Border.all(color: AppColors.accent, width: 1.5),
+                    borderRadius: BorderRadius.zero, // Razor sharp edges
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.accent.withAlpha(20),
+                        blurRadius: 10,
+                      )
+                    ]
                   ),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      shadowColor: Colors.transparent,
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {},
+                      splashColor: AppColors.accent.withAlpha(30),
+                      highlightColor: Colors.transparent,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "UPCOMING FEATURES", 
+                              style: AppTextStyles.body.copyWith(
+                                color: AppColors.accent, 
+                                fontWeight: FontWeight.w900, 
+                                letterSpacing: 2.0,
+                                fontSize: 14,
+                              )
+                            ),
+                            const SizedBox(width: 12),
+                            Icon(
+                              Icons.arrow_forward_ios, 
+                              color: AppColors.accent, 
+                              size: 14,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    onPressed: () {},
-                    child: Text("Upcoming Features", style: AppTextStyles.body.copyWith(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 1.0)),
                   ),
                 ),
               ),
@@ -252,11 +277,11 @@ class TrackerProgressBar extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Container(
-          height: 4, // Sharp, thin track instead of chunky block
+          height: 4, 
           width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.white.withAlpha(20), 
-            borderRadius: BorderRadius.zero, // Sharp edges
+            borderRadius: BorderRadius.zero, 
           ),
           child: FractionallySizedBox(
             alignment: Alignment.centerLeft,
@@ -267,7 +292,7 @@ class TrackerProgressBar extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: AppColors.accent.withAlpha(100),
-                    blurRadius: 8, // Cinematic neon glow
+                    blurRadius: 8, 
                     spreadRadius: 1,
                   ),
                 ],
