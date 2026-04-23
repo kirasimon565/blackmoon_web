@@ -49,89 +49,36 @@ class MainScaffoldState extends State<MainScaffold> {
               color: AppColors.background.withAlpha((0.85 * 255).toInt()),
             ),
           ),
-          // Content
+          
+          // Main Content
           widget.child,
 
-          /// 🔥 FULL SCREEN MENU
+          // Invisible overlay to close the menu when clicking outside of it
           if (_isMenuOpen)
             Positioned.fill(
-              child: _OverlayMenu(onClose: closeMenu),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class _OverlayMenu extends StatelessWidget {
-  final VoidCallback onClose;
-
-  const _OverlayMenu({required this.onClose});
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: Stack(
-        children: [
-          // Deep Black Cinematic Background (No more blue!)
-          Positioned.fill(
-            child: Container(color: Colors.black.withAlpha(245)),
-          ),
-          // Heavier Noise Texture
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/backgrounds/noise_texture.png',
-              fit: BoxFit.cover,
-              opacity: const AlwaysStoppedAnimation(0.12),
-            ),
-          ),
-          // Top Bar (Logo and Close Button)
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: SafeArea(
-              bottom: false,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Image.asset(
-                      'assets/images/studio/blackmoon_logo.png',
-                      height: 60, // Matched height with the app bar
-                      fit: BoxFit.contain,
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.close_rounded,
-                        color: AppColors.textPrimary,
-                        size: 38, // Matching menu icon size
-                      ),
-                      onPressed: onClose,
-                    ),
-                  ],
+              child: GestureDetector(
+                onTap: closeMenu,
+                behavior: HitTestBehavior.opaque,
+                child: Container(
+                  color: Colors.black.withAlpha(120), // Subtle dimming effect
                 ),
               ),
             ),
-          ),
-          // Center Column (Cinematic Nav Items)
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _NavItem(title: "HOME", route: "/", onClose: onClose),
-                  const SizedBox(height: 32),
-                  _NavItem(title: "DREADMOOR", route: "/dreadmoor", onClose: onClose),
-                  const SizedBox(height: 32),
-                  _NavItem(title: "EPISODE TRACKER", route: "/tracker", onClose: onClose),
-                  const SizedBox(height: 32),
-                  _NavItem(title: "CONTACT", route: "/contact", onClose: onClose),
-                ],
+
+          // 🔥 FLOATING MINIMAL MENU
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.easeOutCubic,
+            // Slides down from 60 to 85 when opened
+            top: _isMenuOpen ? 85.0 : 60.0, 
+            right: 24.0,
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 200),
+              // Fades in and out
+              opacity: _isMenuOpen ? 1.0 : 0.0, 
+              child: IgnorePointer(
+                ignoring: !_isMenuOpen, // Prevents clicks when closed/invisible
+                child: _FloatingMenuPanel(onClose: closeMenu),
               ),
             ),
           ),
@@ -141,22 +88,67 @@ class _OverlayMenu extends StatelessWidget {
   }
 }
 
-class _NavItem extends StatefulWidget {
+// ==========================================
+// THE FLOATING PANEL DESIGN
+// ==========================================
+class _FloatingMenuPanel extends StatelessWidget {
+  final VoidCallback onClose;
+
+  const _FloatingMenuPanel({required this.onClose});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 200,
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+      decoration: BoxDecoration(
+        color: const Color(0xFF0A0C10).withAlpha(250), // Very deep black glass
+        borderRadius: BorderRadius.circular(8), // Sharp, clean corners
+        border: Border.all(color: Colors.white.withAlpha(15)), // Barely visible stroke
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(150),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end, // Aligns text to the right, under the hamburger
+        children: [
+          _MinimalNavItem(title: "HOME", route: "/", onClose: onClose),
+          const SizedBox(height: 24),
+          _MinimalNavItem(title: "DREADMOOR", route: "/dreadmoor", onClose: onClose),
+          const SizedBox(height: 24),
+          _MinimalNavItem(title: "TRACKER", route: "/tracker", onClose: onClose),
+          const SizedBox(height: 24),
+          _MinimalNavItem(title: "CONTACT", route: "/contact", onClose: onClose),
+        ],
+      ),
+    );
+  }
+}
+
+// ==========================================
+// MINIMAL NAV ITEM INTERACTION
+// ==========================================
+class _MinimalNavItem extends StatefulWidget {
   final String title;
   final String route;
   final VoidCallback onClose;
 
-  const _NavItem({
+  const _MinimalNavItem({
     required this.title,
     required this.route,
     required this.onClose,
   });
 
   @override
-  State<_NavItem> createState() => _NavItemState();
+  State<_MinimalNavItem> createState() => _MinimalNavItemState();
 }
 
-class _NavItemState extends State<_NavItem> {
+class _MinimalNavItemState extends State<_MinimalNavItem> {
   bool _isHovered = false;
 
   @override
@@ -173,18 +165,18 @@ class _NavItemState extends State<_NavItem> {
           widget.onClose();
           context.go(widget.route);
         },
-        // Cinematic slide-and-color effect
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 250),
-          curve: Curves.easeOutCubic,
-          transform: Matrix4.translationValues(_isHovered ? 15.0 : 0.0, 0, 0),
+          duration: const Duration(milliseconds: 150),
+          curve: Curves.easeOut,
+          // Slides slightly to the left on hover/tap since it's right-aligned
+          transform: Matrix4.translationValues(_isHovered ? -4.0 : 0.0, 0, 0),
           child: Text(
             widget.title,
-            style: AppTextStyles.h1.copyWith(
-              fontSize: 42, // Heavy, large font
-              fontWeight: FontWeight.w900,
-              letterSpacing: 2,
-              color: _isHovered ? AppColors.accent : Colors.white54,
+            style: AppTextStyles.body.copyWith(
+              fontSize: 16, 
+              fontWeight: FontWeight.w800,
+              letterSpacing: 2.0,
+              color: _isHovered ? AppColors.accent : Colors.white70,
             ),
           ),
         ),
