@@ -88,9 +88,9 @@ class DreadmoorScreen extends StatelessWidget {
                             Text(
                               'DREADMOOR',
                               style: AppTextStyles.h1.copyWith(
-                                fontSize: MediaQuery.of(context).size.width * 0.14 > 64.0 
-                                    ? 64.0 
-                                    : MediaQuery.of(context).size.width * 0.14,
+                                fontSize: MediaQuery.of(context).size.width * 0.10 > 60.0 
+                                    ? 60.0 
+                                    : MediaQuery.of(context).size.width * 0.10,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: -1.5,
                                 height: 1.0,
