@@ -74,27 +74,16 @@ class _OverlayMenu extends StatelessWidget {
       color: Colors.transparent,
       child: Stack(
         children: [
-          // Background Gradient (Dark Blue -> Black)
+          // Deep Black Cinematic Background (No more blue!)
           Positioned.fill(
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFF0F172A), // Dark blue tint
-                    Color(0xFF0B0F14), // AppColors.background
-                  ],
-                ),
-              ),
-            ),
+            child: Container(color: Colors.black.withAlpha(245)),
           ),
-          // Subtle Noise Texture
+          // Heavier Noise Texture
           Positioned.fill(
             child: Image.asset(
               'assets/images/backgrounds/noise_texture.png',
               fit: BoxFit.cover,
-              opacity: const AlwaysStoppedAnimation(0.08),
+              opacity: const AlwaysStoppedAnimation(0.12),
             ),
           ),
           // Top Bar (Logo and Close Button)
@@ -105,21 +94,20 @@ class _OverlayMenu extends StatelessWidget {
             child: SafeArea(
               bottom: false,
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Image.asset(
                       'assets/images/studio/blackmoon_logo.png',
-                      width: 120, // minimum 120px
+                      height: 60, // Matched height with the app bar
                       fit: BoxFit.contain,
                     ),
                     IconButton(
                       icon: const Icon(
-                        Icons.close,
+                        Icons.close_rounded,
                         color: AppColors.textPrimary,
-                        size: 32,
+                        size: 38, // Matching menu icon size
                       ),
                       onPressed: onClose,
                     ),
@@ -128,7 +116,7 @@ class _OverlayMenu extends StatelessWidget {
               ),
             ),
           ),
-          // Center Column (Nav Items)
+          // Center Column (Cinematic Nav Items)
           Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -137,19 +125,12 @@ class _OverlayMenu extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _NavItem(title: "HOME", route: "/", onClose: onClose),
-                  const SizedBox(height: 28),
-                  _NavItem(
-                      title: "DREADMOOR",
-                      route: "/dreadmoor",
-                      onClose: onClose),
-                  const SizedBox(height: 28),
-                  _NavItem(
-                      title: "EPISODE TRACKER",
-                      route: "/tracker",
-                      onClose: onClose),
-                  const SizedBox(height: 28),
-                  _NavItem(
-                      title: "CONTACT", route: "/contact", onClose: onClose),
+                  const SizedBox(height: 32),
+                  _NavItem(title: "DREADMOOR", route: "/dreadmoor", onClose: onClose),
+                  const SizedBox(height: 32),
+                  _NavItem(title: "EPISODE TRACKER", route: "/tracker", onClose: onClose),
+                  const SizedBox(height: 32),
+                  _NavItem(title: "CONTACT", route: "/contact", onClose: onClose),
                 ],
               ),
             ),
@@ -192,16 +173,18 @@ class _NavItemState extends State<_NavItem> {
           widget.onClose();
           context.go(widget.route);
         },
-        child: AnimatedOpacity(
-          duration: const Duration(milliseconds: 200),
-          opacity: _isHovered ? 1.0 : 0.6,
+        // Cinematic slide-and-color effect
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeOutCubic,
+          transform: Matrix4.translationValues(_isHovered ? 15.0 : 0.0, 0, 0),
           child: Text(
             widget.title,
             style: AppTextStyles.h1.copyWith(
-              fontSize: 36,
-              fontWeight: FontWeight.w600,
+              fontSize: 42, // Heavy, large font
+              fontWeight: FontWeight.w900,
               letterSpacing: 2,
-              color: Colors.white,
+              color: _isHovered ? AppColors.accent : Colors.white54,
             ),
           ),
         ),
