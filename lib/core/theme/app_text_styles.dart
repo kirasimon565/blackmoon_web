@@ -7,24 +7,26 @@ class AppTextStyles {
   static const TextStyle h1 = TextStyle(
     fontFamily: fontFamily,
     fontSize: 42,
-    fontWeight: FontWeight.w700, // Bold
+    fontWeight: FontWeight.w900, // Black/Heavy weight
     color: AppColors.textPrimary,
-    height: 1.3,
+    letterSpacing: -1.0, // Tighter tracking
+    height: 1.1,
   );
 
   static const TextStyle h2 = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 22,
-    fontWeight: FontWeight.w600, // SemiBold
+    fontSize: 28,
+    fontWeight: FontWeight.w800, // ExtraBold
     color: AppColors.textPrimary,
-    height: 1.4,
+    height: 1.2,
   );
 
   static const TextStyle subtitle = TextStyle(
     fontFamily: fontFamily,
     fontSize: 18,
-    fontWeight: FontWeight.w400,
-    color: AppColors.textSecondary,
+    fontWeight: FontWeight.w700,
+    color: AppColors.accentSecondary, // Orange for system/status text
+    letterSpacing: 2.0,
     height: 1.5,
   );
 
