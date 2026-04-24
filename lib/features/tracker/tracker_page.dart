@@ -203,7 +203,7 @@ class _TrackerPageState extends State<TrackerPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              "UPCOMING FEATURES", 
+                              "COMING SOON", 
                               style: AppTextStyles.body.copyWith(
                                 color: AppColors.accent, 
                                 fontWeight: FontWeight.w900, 
