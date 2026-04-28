@@ -65,20 +65,20 @@ class MainScaffoldState extends State<MainScaffold> {
               ),
             ),
 
-          // 🔥 FLOATING MINIMAL MENU
+          // 🔥 SYSTEM CONCAVE MENU (emerges from right edge, flat)
           AnimatedPositioned(
             duration: const Duration(milliseconds: 250),
             curve: Curves.easeOutCubic,
             // Slides down from 60 to 85 when opened
             top: _isMenuOpen ? 85.0 : 60.0, 
-            right: 24.0,
+            right: 0.0, // Anchored to the right edge, not floating
             child: AnimatedOpacity(
               duration: const Duration(milliseconds: 200),
               // Fades in and out
               opacity: _isMenuOpen ? 1.0 : 0.0, 
               child: IgnorePointer(
                 ignoring: !_isMenuOpen, // Prevents clicks when closed/invisible
-                child: _FloatingMenuPanel(onClose: closeMenu),
+                child: const _FloatingMenuPanel(),
               ),
             ),
           ),
@@ -89,44 +89,100 @@ class MainScaffoldState extends State<MainScaffold> {
 }
 
 // ==========================================
-// THE FLOATING PANEL DESIGN
+// THE SYSTEM PANEL DESIGN with CONCAVE NOTCH
 // ==========================================
 class _FloatingMenuPanel extends StatelessWidget {
-  final VoidCallback onClose;
+  // Constants for the panel's visual geometry
+  static const double _width = 200.0;
+  static const double _notchXOffsetFromRight = 40.0; // Visual alignment to menu icon
+  static const double _notchWidth = 20.0;
+  static const double _notchDepth = 10.0;
 
-  const _FloatingMenuPanel({required this.onClose});
+  const _FloatingMenuPanel();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
-      decoration: BoxDecoration(
-        color: const Color(0xFF0A0C10).withAlpha(250), // Very deep black glass
-        borderRadius: BorderRadius.circular(8), // Sharp, clean corners
-        border: Border.all(color: Colors.white.withAlpha(15)), // Barely visible stroke
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(150),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
+    return ClipPath(
+      clipper: _MenuPanelClipper(
+        notchXOffsetFromRight: _notchXOffsetFromRight,
+        notchWidth: _notchWidth,
+        notchDepth: _notchDepth,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end, // Aligns text to the right, under the hamburger
-        children: [
-          _MinimalNavItem(title: "HOME", route: "/", onClose: onClose),
-          const SizedBox(height: 24),
-          _MinimalNavItem(title: "DREADMOOR", route: "/dreadmoor", onClose: onClose),
-          const SizedBox(height: 24),
-          _MinimalNavItem(title: "TRACKER", route: "/tracker", onClose: onClose),
-          const SizedBox(height: 24),
-          _MinimalNavItem(title: "CONTACT", route: "/contact", onClose: onClose),
-        ],
+      child: Container(
+        width: _width,
+        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+        decoration: BoxDecoration(
+          // Using solid AppColors background for the panel, attached to edge
+          color: AppColors.backgroundSecondary.withAlpha(255), 
+          // Sharp edges on the corner, clipping handles the notch
+          borderRadius: BorderRadius.zero, 
+          // No shadow, no glow, flat look.
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          // Text aligned left for a controlled system readout feel
+          crossAxisAlignment: CrossAxisAlignment.start, 
+          children: [
+            _MinimalNavItem(title: "HOME", route: "/", onClose: (context.findAncestorStateOfType<MainScaffoldState>())?.closeMenu),
+            const SizedBox(height: 28), // Increased spacing for breathing room
+            _MinimalNavItem(title: "DREADMOOR", route: "/dreadmoor", onClose: (context.findAncestorStateOfType<MainScaffoldState>())?.closeMenu),
+            const SizedBox(height: 28),
+            _MinimalNavItem(title: "TRACKER", route: "/tracker", onClose: (context.findAncestorStateOfType<MainScaffoldState>())?.closeMenu),
+            const SizedBox(height: 28),
+            _MinimalNavItem(title: "CONTACT", route: "/contact", onClose: (context.findAncestorStateOfType<MainScaffoldState>())?.closeMenu),
+          ],
+        ),
       ),
     );
+  }
+}
+
+// ==========================================
+// CUSTOM CLIPPER FOR THE CONCAVE NOTCH
+// ==========================================
+class _MenuPanelClipper extends CustomClipper<Path> {
+  final double notchXOffsetFromRight;
+  final double notchWidth;
+  final double notchDepth;
+
+  _MenuPanelClipper({
+    required this.notchXOffsetFromRight,
+    required this.notchWidth,
+    required this.notchDepth,
+  });
+
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    // Start at top right, attached to the edge
+    path.moveTo(size.width, 0); 
+    // Line to top left
+    path.lineTo(0, 0); 
+    // Line down left side
+    path.lineTo(0, size.height); 
+
+    // Calculate notch position near the right edge
+    double notchCenterX = size.width - notchXOffsetFromRight;
+    
+    // Bottom edge with precise concave cut
+    path.lineTo(notchCenterX - notchWidth / 2, size.height);
+    // Inward concave U-cut (using quadraticBezierTo for a tight radius)
+    path.quadraticBezierTo(notchCenterX, size.height - notchDepth, notchCenterX + notchWidth / 2, size.height);
+    
+    // Line to bottom right corner
+    path.lineTo(size.width, size.height); 
+    // Line up right side to close, attached to the edge
+    path.lineTo(size.width, 0); 
+    
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(_MenuPanelClipper oldClipper) {
+    return oldClipper.notchXOffsetFromRight != notchXOffsetFromRight ||
+           oldClipper.notchWidth != notchWidth ||
+           oldClipper.notchDepth != notchDepth;
   }
 }
 
@@ -136,12 +192,12 @@ class _FloatingMenuPanel extends StatelessWidget {
 class _MinimalNavItem extends StatefulWidget {
   final String title;
   final String route;
-  final VoidCallback onClose;
+  final VoidCallback? onClose; // Updated for dynamic retrieval
 
   const _MinimalNavItem({
     required this.title,
     required this.route,
-    required this.onClose,
+    this.onClose,
   });
 
   @override
@@ -162,13 +218,13 @@ class _MinimalNavItemState extends State<_MinimalNavItem> {
         onTapUp: (_) => setState(() => _isHovered = false),
         onTapCancel: () => setState(() => _isHovered = false),
         onTap: () {
-          widget.onClose();
+          widget.onClose?.call(); // Close menu
           context.go(widget.route);
         },
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
           curve: Curves.easeOut,
-          // Slides slightly to the left on hover/tap since it's right-aligned
+          // Slides slightly to the left on hover/tap since it's now left-aligned
           transform: Matrix4.translationValues(_isHovered ? -4.0 : 0.0, 0, 0),
           child: Text(
             widget.title,
@@ -176,6 +232,7 @@ class _MinimalNavItemState extends State<_MinimalNavItem> {
               fontSize: 16, 
               fontWeight: FontWeight.w800,
               letterSpacing: 2.0,
+              // Color changes on hover using AppColors.accent
               color: _isHovered ? AppColors.accent : Colors.white70,
             ),
           ),
